@@ -14,6 +14,8 @@ import edu.ncsu.csc216.pack_scheduler.user.Student;
  * All students have a unique id.
  * @author Sarah Heckman
  * @author Daniel Mills <demills>
+ * @author Noah Benveniste <nnbenven>
+ * @author Kevin Hildner <kwhildne>
  */
 public class StudentDirectory {
 	

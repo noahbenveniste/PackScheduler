@@ -15,6 +15,8 @@ import edu.ncsu.csc216.pack_scheduler.user.Student;
  * A class providing static IO methods for reading and writing Student records
  *   from and to a file, respectively.
  *   
+ * @author kwhildne
+ * @author nnbenven 
  * @author demills
  * @author Sarah Heckman
  */
@@ -31,12 +33,18 @@ public class StudentRecordIO {
 	public static ArrayList<Student> readStudentRecords(String filename) throws FileNotFoundException {
 		Scanner fileReader = new Scanner(new FileInputStream(filename));
 		ArrayList<Student> students = new ArrayList<Student>();
+		// While the reader has more lines, delegates to the processStudent
+		// helper method to read in Students.
 		while (fileReader.hasNextLine()) {
 			try {
 				Student student = processStudent(fileReader.nextLine());
 				boolean duplicate = false;
+				// If the processed record matches a Student who is already read in,
+				//   duplicate is set to true, and the duplicate will not be added to
+				//   the ArrayList of students.
 				for (int i = 0; i < students.size(); i++) {
 					Student s = students.get(i);
+					// A Student is a duplicate if its ID matches one in the students ArrayList.
 					if (student.getId().equals(s.getId())) {
 						//it's a duplicate
 						duplicate = true;
@@ -46,7 +54,9 @@ public class StudentRecordIO {
 					students.add(student);
 				}
 			} catch (IllegalArgumentException e) {
-				//skip the line
+				// An IllegalArgumentException will be thrown from ProcessStudent if 
+				//   the line cannot be processed into a valid Student record.
+				// Nothing should be done if this happens, just continues to next line.
 			}
 		}
 		fileReader.close();
@@ -63,6 +73,7 @@ public class StudentRecordIO {
 	 * @throws IOException if the file cannot be created
 	 */
 	public static void writeStudentRecords(String filename, ArrayList<Student> studentDirectory) throws IOException {
+		// IOException is thrown from the File constructor if file cannot be created.
 		PrintStream fileWriter = new PrintStream(new File(filename));
 
 		for (int i = 0; i < studentDirectory.size(); i++) {
@@ -97,6 +108,9 @@ public class StudentRecordIO {
 		String password;
 		int maxCredits;
 
+		// Attempts to read in a line, expecting the tokens to be there. If the tokens
+		//   aren't there, a NoSuchElementException will be thrown and then caught in 
+		//   the catch block.
 		try {
 			firstName = readLine.next();
 			lastName = readLine.next();

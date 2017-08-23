@@ -78,19 +78,19 @@ public class Student {
 	 */
 	public void setEmail(String email) {
 		if (email == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid email");
 		}
 		if (email.equals("")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid email");
 		}
 		if (!email.contains("@")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid email");
 		}
 		if (!email.contains(".")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid email");
 		}
 		if (email.indexOf("@") > email.lastIndexOf(".")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid email");
 		}
 		this.email = email;
 	}
@@ -110,10 +110,10 @@ public class Student {
 	 */
 	public void setPassword(String password) {
 		if (password == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid password");
 		}
 		if (password.equals("")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid password");
 		}
 		this.password = password;
 	}
@@ -133,7 +133,7 @@ public class Student {
 	 */
 	public void setMaxCredits(int maxCredits) {
 		if (maxCredits < MIN_CREDITS || maxCredits > MAX_CREDITS) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid max credits");
 		}
 		this.maxCredits = maxCredits;
 	}
@@ -153,10 +153,10 @@ public class Student {
 	 */
 	public void setFirstName(String firstName) {
 		if (firstName == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid first name");
 		}
 		if (firstName.equals("")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid first name");
 		}
 		this.firstName = firstName;
 	}
@@ -176,10 +176,10 @@ public class Student {
 	 */
 	public void setLastName(String lastName) {
 		if (lastName == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid last name");
 		}
 		if (lastName.equals("")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid last name");
 		}
 		this.lastName = lastName;
 	}
@@ -199,10 +199,10 @@ public class Student {
 	 */
 	private void setId(String id) {
 		if (id == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid id");
 		}
 		if (id.equals("")) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid id");
 		}
 		this.id = id;
 	}

@@ -37,8 +37,7 @@ public class StudentRecordIO {
 				boolean duplicate = false;
 				for (int i = 0; i < students.size(); i++) {
 					Student s = students.get(i);
-					if (student.getFirstName().equals(s.getFirstName()) &&
-							student.getLastName().equals(s.getLastName())) {
+					if (student.getId().equals(s.getId())) {
 						//it's a duplicate
 						duplicate = true;
 					}

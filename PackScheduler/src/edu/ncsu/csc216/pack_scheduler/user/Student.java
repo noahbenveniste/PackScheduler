@@ -13,7 +13,8 @@ public class Student {
 	private String password;
 	private int maxCredits;
 	
-	public static int MAX_CREDITS = 18;
+	public static final int MIN_CREDITS = 3;
+	public static final int MAX_CREDITS = 18;
 
 	public Student(String firstName, String lastName, String id, String email, String hashPW, int maxCredits) {
 		this.setFirstName(firstName);
@@ -22,6 +23,10 @@ public class Student {
 		this.setEmail(email);
 		this.setPassword(hashPW);
 		this.setMaxCredits(maxCredits);
+	}
+	
+	public Student(String firstName, String lastName, String id, String email, String hashPW) {
+		this(firstName, lastName, id, email, hashPW, MAX_CREDITS);
 	}
 	
 	/**
@@ -35,6 +40,21 @@ public class Student {
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
+		if (email == null) {
+			throw new IllegalArgumentException();
+		}
+		if (email.equals("")) {
+			throw new IllegalArgumentException();
+		}
+		if (!email.contains("@")) {
+			throw new IllegalArgumentException();
+		}
+		if (!email.contains(".")) {
+			throw new IllegalArgumentException();
+		}
+		if (email.indexOf("@") > email.lastIndexOf(".")) {
+			throw new IllegalArgumentException();
+		}
 		this.email = email;
 	}
 
@@ -49,6 +69,12 @@ public class Student {
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
+		if (password == null) {
+			throw new IllegalArgumentException();
+		}
+		if (password.equals("")) {
+			throw new IllegalArgumentException();
+		}
 		this.password = password;
 	}
 
@@ -63,47 +89,64 @@ public class Student {
 	 * @param maxCredits the maxCredits to set
 	 */
 	public void setMaxCredits(int maxCredits) {
+		if (maxCredits < MIN_CREDITS || maxCredits > MAX_CREDITS) {
+			throw new IllegalArgumentException();
+		}
 		this.maxCredits = maxCredits;
-	}
-
-	/**
-	 * @param firstName the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	private void setId(String id) {
-		this.id = id;
-	}
-
-	public Student(String firstName, String lastName, String id, String email, String hashPW) {
-		this(firstName, lastName, id, email, hashPW, MAX_CREDITS);
 	}
 	
 	public String getFirstName() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.firstName;
+	}
+	
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		if (firstName == null) {
+			throw new IllegalArgumentException();
+		}
+		if (firstName.equals("")) {
+			throw new IllegalArgumentException();
+		}
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.lastName;
 	}
 	
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		if (lastName == null) {
+			throw new IllegalArgumentException();
+		}
+		if (lastName.equals("")) {
+			throw new IllegalArgumentException();
+		}
+		this.lastName = lastName;
+	}
+
 	public String getId() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.id;
+	}
+	
+	/**
+	 * @param id the id to set
+	 */
+	private void setId(String id) {
+		if (id == null) {
+			throw new IllegalArgumentException();
+		}
+		if (id.equals("")) {
+			throw new IllegalArgumentException();
+		}
+		this.id = id;
 	}
 
 	/* (non-Javadoc)
@@ -162,6 +205,15 @@ public class Student {
 		} else if (!password.equals(other.password))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.getFirstName() + "," + this.getLastName() + "," + this.getId() + "," 
+			+ this.getEmail() + "," + this.getPassword() +"," + this.getMaxCredits();
 	}
 	
 	

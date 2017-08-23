@@ -13,9 +13,9 @@ import edu.ncsu.csc216.pack_scheduler.user.Student;
  * Maintains a directory of all students enrolled at NC State.
  * All students have a unique id.
  * @author Sarah Heckman
- * @author Daniel Mills <demills>
- * @author Noah Benveniste <nnbenven>
- * @author Kevin Hildner <kwhildne>
+ * @author demills
+ * @author nnbenven
+ * @author kwhildne
  */
 public class StudentDirectory {
 	

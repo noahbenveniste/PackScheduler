@@ -2,9 +2,9 @@ package edu.ncsu.csc216.pack_scheduler.user;
 /**
  * Class for a student object
  * @author Sarah Heckman
- * @author Daniel Mills <demills>
- * @author Noah Benveniste <nnbenven>
- * @author Kevin Hildner <kwhildne>
+ * @author demills
+ * @author nnbenven
+ * @author kwhildne
  */
 public class Student {
 	

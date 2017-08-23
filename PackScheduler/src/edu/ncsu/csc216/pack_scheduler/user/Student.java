@@ -77,21 +77,27 @@ public class Student {
 	 * character
 	 */
 	public void setEmail(String email) {
+		//First check that input string isn't null
 		if (email == null) {
 			throw new IllegalArgumentException("Invalid email");
 		}
+		//Next check that input isn't an empty string
 		if (email.equals("")) {
 			throw new IllegalArgumentException("Invalid email");
 		}
+		//Check that the input contains an @ character
 		if (!email.contains("@")) {
 			throw new IllegalArgumentException("Invalid email");
 		}
+		//Check that the input contains a . character
 		if (!email.contains(".")) {
 			throw new IllegalArgumentException("Invalid email");
 		}
+		//Check that the @ comes before the last . in the string
 		if (email.indexOf("@") > email.lastIndexOf(".")) {
 			throw new IllegalArgumentException("Invalid email");
 		}
+		//If all conditions are met, set the field
 		this.email = email;
 	}
 
@@ -109,12 +115,15 @@ public class Student {
 	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	public void setPassword(String password) {
+		//Check that the input isn't null
 		if (password == null) {
 			throw new IllegalArgumentException("Invalid password");
 		}
+		//Check that the input is an empty string
 		if (password.equals("")) {
 			throw new IllegalArgumentException("Invalid password");
 		}
+		//Set the field if all conditions are met
 		this.password = password;
 	}
 
@@ -132,9 +141,11 @@ public class Student {
 	 * @throws IllegalArgumentException for inputs less than 3 or greater than 18
 	 */
 	public void setMaxCredits(int maxCredits) {
+		//Check that the number of credits is between 3 and 18
 		if (maxCredits < MIN_CREDITS || maxCredits > MAX_CREDITS) {
 			throw new IllegalArgumentException("Invalid max credits");
 		}
+		//Set the field if all conditions are met
 		this.maxCredits = maxCredits;
 	}
 	
@@ -152,12 +163,15 @@ public class Student {
 	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	public void setFirstName(String firstName) {
+		//Check that the input isn't null
 		if (firstName == null) {
 			throw new IllegalArgumentException("Invalid first name");
 		}
+		//Check that the input string isn't empty
 		if (firstName.equals("")) {
 			throw new IllegalArgumentException("Invalid first name");
 		}
+		//Set field if conditions are met
 		this.firstName = firstName;
 	}
 
@@ -175,12 +189,15 @@ public class Student {
 	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	public void setLastName(String lastName) {
+		//Check that the input isn't null
 		if (lastName == null) {
 			throw new IllegalArgumentException("Invalid last name");
 		}
+		//Check that the input isn't an empty string
 		if (lastName.equals("")) {
 			throw new IllegalArgumentException("Invalid last name");
 		}
+		//Set field if all conditions are met
 		this.lastName = lastName;
 	}
 
@@ -198,12 +215,15 @@ public class Student {
 	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	private void setId(String id) {
+		//Check that input isn't null
 		if (id == null) {
 			throw new IllegalArgumentException("Invalid id");
 		}
+		//Check that input isn't an empty string
 		if (id.equals("")) {
 			throw new IllegalArgumentException("Invalid id");
 		}
+		//Set the field if all conditions are met
 		this.id = id;
 	}
 

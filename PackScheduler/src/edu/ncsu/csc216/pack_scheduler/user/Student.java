@@ -1,6 +1,7 @@
 package edu.ncsu.csc216.pack_scheduler.user;
 /**
  * Class for a student object
+ * @author Sarah Heckman
  * @author Daniel Mills <demills>
  * @author Noah Benveniste <nnbenven>
  * @author Kevin Hildner <kwhildne>
@@ -71,6 +72,9 @@ public class Student {
 	/**
 	 * Sets the student's email
 	 * @param email the email to set
+	 * @throws IllegalArgumentException for null or empty string input, if the email does not contain
+	 * the "@" or "." characters, or if the final instance of the "." character comes before the "@" 
+	 * character
 	 */
 	public void setEmail(String email) {
 		if (email == null) {
@@ -102,6 +106,7 @@ public class Student {
 	/**
 	 * Sets the student's password
 	 * @param password the password to set
+	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	public void setPassword(String password) {
 		if (password == null) {
@@ -124,6 +129,7 @@ public class Student {
 	/**
 	 * Sets the max number of credits the student can take
 	 * @param maxCredits the maxCredits to set
+	 * @throws IllegalArgumentException for inputs less than 3 or greater than 18
 	 */
 	public void setMaxCredits(int maxCredits) {
 		if (maxCredits < MIN_CREDITS || maxCredits > MAX_CREDITS) {
@@ -137,13 +143,13 @@ public class Student {
 	 * @return the student's first name
 	 */
 	public String getFirstName() {
-		// TODO Auto-generated method stub
 		return this.firstName;
 	}
 	
 	/**
 	 * Sets the student's first name
 	 * @param firstName the firstName to set
+	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	public void setFirstName(String firstName) {
 		if (firstName == null) {
@@ -160,13 +166,13 @@ public class Student {
 	 * @return the student's last name
 	 */
 	public String getLastName() {
-		// TODO Auto-generated method stub
 		return this.lastName;
 	}
 	
 	/**
 	 * Sets the student's last name
 	 * @param lastName the lastName to set
+	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	public void setLastName(String lastName) {
 		if (lastName == null) {
@@ -183,13 +189,13 @@ public class Student {
 	 * @return the student's id
 	 */
 	public String getId() {
-		// TODO Auto-generated method stub
 		return this.id;
 	}
 	
 	/**
 	 * Sets the student's id
 	 * @param id the id to set
+	 * @throws IllegalArgumentException for null or empty string input
 	 */
 	private void setId(String id) {
 		if (id == null) {
@@ -269,7 +275,7 @@ public class Student {
 	@Override
 	public String toString() {
 		return this.getFirstName() + "," + this.getLastName() + "," + this.getId() + "," 
-			+ this.getEmail() + "," + this.getPassword() +"," + this.getMaxCredits();
+			+ this.getEmail() + "," + this.getPassword() + "," + this.getMaxCredits();
 	}
 	
 }

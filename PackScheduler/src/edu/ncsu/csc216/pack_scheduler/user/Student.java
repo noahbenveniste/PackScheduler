@@ -1,22 +1,45 @@
 package edu.ncsu.csc216.pack_scheduler.user;
 /**
- * 
+ * Class for a student object
  * @author Daniel Mills <demills>
  * @author Noah Benveniste <nnbenven>
  * @author Kevin Hildner <kwhildne>
  */
 public class Student {
+	
+	/** Fields */
+	
+	/** The student's first name */
 	private String firstName;
+	/** The student's last name */
 	private String lastName;
+	/** The student's id */
 	private String id;
+	/** The student's email */
 	private String email;
+	/** The student's password */
 	private String password;
+	/** The maximum number of credits that the student can enroll in */
 	private int maxCredits;
 	
+	/** Class Constants */
+	
+	/** The minimum number of credits to enroll in */
 	public static final int MIN_CREDITS = 3;
+	/** The maximum number of credits to enroll in */
 	public static final int MAX_CREDITS = 18;
 
+	/**
+	 * Constructor for student object
+	 * @param firstName The student's first name
+	 * @param lastName The student's last name
+	 * @param id The student's id
+	 * @param email The student's email
+	 * @param hashPW The student's password
+	 * @param maxCredits The max number of credits that the student can take
+	 */
 	public Student(String firstName, String lastName, String id, String email, String hashPW, int maxCredits) {
+		//Set the fields by calling setter methods to enforce class invariants
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setId(id);
@@ -25,11 +48,20 @@ public class Student {
 		this.setMaxCredits(maxCredits);
 	}
 	
+	/**
+	 * Constructor with default max credit value
+	 * @param firstName The student's first name
+	 * @param lastName The student's last name
+	 * @param id The student's id
+	 * @param email The student's email
+	 * @param hashPW The student's password
+	 */
 	public Student(String firstName, String lastName, String id, String email, String hashPW) {
 		this(firstName, lastName, id, email, hashPW, MAX_CREDITS);
 	}
 	
 	/**
+	 * Returns the the student's email
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -37,6 +69,7 @@ public class Student {
 	}
 
 	/**
+	 * Sets the student's email
 	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
@@ -59,6 +92,7 @@ public class Student {
 	}
 
 	/**
+	 * Gets the student's password
 	 * @return the password
 	 */
 	public String getPassword() {
@@ -66,6 +100,7 @@ public class Student {
 	}
 
 	/**
+	 * Sets the student's password
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
@@ -79,6 +114,7 @@ public class Student {
 	}
 
 	/**
+	 * Gets the max number of credits the student can take
 	 * @return the maxCredits
 	 */
 	public int getMaxCredits() {
@@ -86,6 +122,7 @@ public class Student {
 	}
 
 	/**
+	 * Sets the max number of credits the student can take
 	 * @param maxCredits the maxCredits to set
 	 */
 	public void setMaxCredits(int maxCredits) {
@@ -95,12 +132,17 @@ public class Student {
 		this.maxCredits = maxCredits;
 	}
 	
+	/**
+	 * Gets the student's first name
+	 * @return the student's first name
+	 */
 	public String getFirstName() {
 		// TODO Auto-generated method stub
 		return this.firstName;
 	}
 	
 	/**
+	 * Sets the student's first name
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
@@ -113,12 +155,17 @@ public class Student {
 		this.firstName = firstName;
 	}
 
+	/**
+	 * Gets the student's last name
+	 * @return the student's last name
+	 */
 	public String getLastName() {
 		// TODO Auto-generated method stub
 		return this.lastName;
 	}
 	
 	/**
+	 * Sets the student's last name
 	 * @param lastName the lastName to set
 	 */
 	public void setLastName(String lastName) {
@@ -131,12 +178,17 @@ public class Student {
 		this.lastName = lastName;
 	}
 
+	/**
+	 * Gets the student's id
+	 * @return the student's id
+	 */
 	public String getId() {
 		// TODO Auto-generated method stub
 		return this.id;
 	}
 	
 	/**
+	 * Sets the student's id
 	 * @param id the id to set
 	 */
 	private void setId(String id) {
@@ -149,8 +201,9 @@ public class Student {
 		this.id = id;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * Generates a hashCode for Student using all fields.
+	 * @return hashCode for Student
 	 */
 	@Override
 	public int hashCode() {
@@ -165,8 +218,10 @@ public class Student {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * Compares a given object to this object for equality over all fields.
+	 * @param obj The object to compare
+	 * @return true if the objects are the same over all fields
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -207,8 +262,9 @@ public class Student {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * Creates a string representation of the student object's data
+	 * @return the student info represented as a string
 	 */
 	@Override
 	public String toString() {
@@ -216,6 +272,4 @@ public class Student {
 			+ this.getEmail() + "," + this.getPassword() +"," + this.getMaxCredits();
 	}
 	
-	
-
 }

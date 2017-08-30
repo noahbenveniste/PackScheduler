@@ -31,7 +31,12 @@ public class StudentRecordIO {
 	 * @throws FileNotFoundException if the given file cannot be found or accessed
 	 */
 	public static ArrayList<Student> readStudentRecords(String filename) throws FileNotFoundException {
-		Scanner fileReader = new Scanner(new FileInputStream(filename));
+		Scanner fileReader;
+		try {
+			fileReader = new Scanner(new FileInputStream(filename));
+		} catch(NullPointerException e) {
+			throw new FileNotFoundException();
+		}
 		ArrayList<Student> students = new ArrayList<Student>();
 		// While the reader has more lines, delegates to the processStudent
 		// helper method to read in Students.

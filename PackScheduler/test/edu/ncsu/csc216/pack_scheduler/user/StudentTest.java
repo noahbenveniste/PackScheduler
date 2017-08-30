@@ -10,7 +10,6 @@ import org.junit.Test;
  * @author Daniel Mills
  * @author Kevin Hildner
  */
-//adfdsafdsa
 public class StudentTest {
 
 	/** Valid first name */
@@ -27,6 +26,8 @@ public class StudentTest {
 	private static final int CREDITS = 10;
 	/** Max number of credits, used by constructor without int param as default value */
 	private static final int MAX_CREDITS = 18;
+	/** Min number of credits */
+	private static final int MIN_CREDITS = 3;
 	
 	/**
 	 * Testing constructor that has credits as an additional parameter
@@ -192,7 +193,49 @@ public class StudentTest {
 	 */
 	@Test
 	public void testSetPassword() {
-		fail("Not yet implemented");
+		//Initialize a valid student 
+		Student s = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD);
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals(HASHED_PASSWORD, s.getPassword());
+		assertEquals(MAX_CREDITS, s.getMaxCredits());
+		
+		//Test that setting the password to null throws an exception and doesn't change anything
+		try {
+			s.setPassword(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals(FIRST_NAME, s.getFirstName());
+			assertEquals(LAST_NAME, s.getLastName());
+			assertEquals(ID, s.getId());
+			assertEquals(EMAIL, s.getEmail());
+			assertEquals(HASHED_PASSWORD, s.getPassword());
+			assertEquals(MAX_CREDITS, s.getMaxCredits());
+		}
+		
+		//Test that setting the password to an empty string throws an exception and doesn't change anything
+		try {
+			s.setPassword("");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals(FIRST_NAME, s.getFirstName());
+			assertEquals(LAST_NAME, s.getLastName());
+			assertEquals(ID, s.getId());
+			assertEquals(EMAIL, s.getEmail());
+			assertEquals(HASHED_PASSWORD, s.getPassword());
+			assertEquals(MAX_CREDITS, s.getMaxCredits());
+		}
+		
+		//Valid password set
+		s.setPassword("password");
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals("password", s.getPassword());
+		assertEquals(MAX_CREDITS, s.getMaxCredits());
 	}
 
 	/**
@@ -200,7 +243,68 @@ public class StudentTest {
 	 */
 	@Test
 	public void testSetMaxCredits() {
-		fail("Not yet implemented");
+		//Initialize a valid student
+		Student s = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD, CREDITS);
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals(HASHED_PASSWORD, s.getPassword());
+		assertEquals(CREDITS, s.getMaxCredits());
+		
+		//Test that setting credits below 3 throws an exception and doesn't change anything
+		try {
+			s.setMaxCredits(2);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals(FIRST_NAME, s.getFirstName());
+			assertEquals(LAST_NAME, s.getLastName());
+			assertEquals(ID, s.getId());
+			assertEquals(EMAIL, s.getEmail());
+			assertEquals(HASHED_PASSWORD, s.getPassword());
+			assertEquals(CREDITS, s.getMaxCredits());
+		}
+
+		
+		//Test that setting credits above 18 throws an exception and doesn't change anything
+		try {
+			s.setMaxCredits(19);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals(FIRST_NAME, s.getFirstName());
+			assertEquals(LAST_NAME, s.getLastName());
+			assertEquals(ID, s.getId());
+			assertEquals(EMAIL, s.getEmail());
+			assertEquals(HASHED_PASSWORD, s.getPassword());
+			assertEquals(CREDITS, s.getMaxCredits());
+		}
+		
+		//Test valid credits set at lower boundary
+		s.setMaxCredits(3);
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals(HASHED_PASSWORD, s.getPassword());
+		assertEquals(MIN_CREDITS, s.getMaxCredits());
+		
+		//Test valid credits set at middle value
+		s.setMaxCredits(7);
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals(HASHED_PASSWORD, s.getPassword());
+		assertEquals(7, s.getMaxCredits());
+		
+		//Test valid credits set at upper boundary
+		s.setMaxCredits(MAX_CREDITS);
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals(HASHED_PASSWORD, s.getPassword());
+		assertEquals(MAX_CREDITS, s.getMaxCredits());
 	}
 
 	/**
@@ -303,6 +407,22 @@ public class StudentTest {
 		assertEquals(MAX_CREDITS, s.getMaxCredits());
 	}
 
+	/**
+	 * 
+	 */
+	@Test 
+	public void testSetId() {
+		//Initialize a valid student 
+		Student s = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD);
+		assertEquals(FIRST_NAME, s.getFirstName());
+		assertEquals(LAST_NAME, s.getLastName());
+		assertEquals(ID, s.getId());
+		assertEquals(EMAIL, s.getEmail());
+		assertEquals(HASHED_PASSWORD, s.getPassword());
+		assertEquals(MAX_CREDITS, s.getMaxCredits());
+		
+	}
+	
 	/**
 	 * Testing equals method
 	 */

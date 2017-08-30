@@ -32,6 +32,11 @@ public class StudentDirectoryTest {
 	private static final String PASSWORD = "pw";
 	/** Test max credits */
 	private static final int MAX_CREDITS = 15;
+	/** Invalid course records */ 
+	private final String invalidTestFile = "test-files/invalid_student_records.txt";
+	/** Non matching password */
+	private static final String PASSWORD1 = "pw1";
+	
 	
 	/**
 	 * Resets course_records.txt for use in other tests.
@@ -49,7 +54,8 @@ public class StudentDirectoryTest {
 			fail("Unable to reset files");
 		}
 	}
-
+	
+	
 	/**
 	 * Tests StudentDirectory().
 	 */
@@ -83,10 +89,25 @@ public class StudentDirectoryTest {
 	@Test
 	public void testLoadStudentsFromFile() {
 		StudentDirectory sd = new StudentDirectory();
+		StudentDirectory sd2 = new StudentDirectory();
 				
 		//Test valid file
 		sd.loadStudentsFromFile(validTestFile);
 		assertEquals(10, sd.getStudentDirectory().length);
+		
+		//Test that invalid files are ignored
+		sd.loadStudentsFromFile(invalidTestFile);
+		assertEquals(0, sd2.getStudentDirectory().length);
+		
+		//Test file that doesn't exist
+		try {
+			sd.loadStudentsFromFile("Nonexistant File");
+			fail("Loaded file that doesn't exist");
+		} catch(IllegalArgumentException e) {
+			assertEquals(0, sd2.getStudentDirectory().length);
+		}
+		
+		
 	}
 
 	/**
@@ -96,6 +117,7 @@ public class StudentDirectoryTest {
 	public void testAddStudent() {
 		StudentDirectory sd = new StudentDirectory();
 		
+		
 		//Test valid Student
 		sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD, MAX_CREDITS);
 		String [][] studentDirectory = sd.getStudentDirectory();
@@ -103,6 +125,30 @@ public class StudentDirectoryTest {
 		assertEquals(FIRST_NAME, studentDirectory[0][0]);
 		assertEquals(LAST_NAME, studentDirectory[0][1]);
 		assertEquals(ID, studentDirectory[0][2]);
+		
+		//Test invalid password
+		try {
+			sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, null, PASSWORD, MAX_CREDITS);
+			fail("Student added w/ null password");
+		} catch(IllegalArgumentException e) {
+			studentDirectory = sd.getStudentDirectory();
+			assertEquals(1, studentDirectory.length);
+			assertEquals(FIRST_NAME, studentDirectory[0][0]);
+			assertEquals(LAST_NAME, studentDirectory[0][1]);
+			assertEquals(ID, studentDirectory[0][2]);		}
+		
+		//Test passwords that don't match
+				try {
+					sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD1, MAX_CREDITS);
+					fail("Student added w/ non matching passwords");
+				} catch(IllegalArgumentException e) {
+					studentDirectory = sd.getStudentDirectory();
+					assertEquals(1, studentDirectory.length);
+					assertEquals(FIRST_NAME, studentDirectory[0][0]);
+					assertEquals(LAST_NAME, studentDirectory[0][1]);
+					assertEquals(ID, studentDirectory[0][2]);		}
+				
+		
 	}
 
 	/**
@@ -111,7 +157,7 @@ public class StudentDirectoryTest {
 	@Test
 	public void testRemoveStudent() {
 		StudentDirectory sd = new StudentDirectory();
-				
+
 		//Add students and remove
 		sd.loadStudentsFromFile(validTestFile);
 		assertEquals(10, sd.getStudentDirectory().length);

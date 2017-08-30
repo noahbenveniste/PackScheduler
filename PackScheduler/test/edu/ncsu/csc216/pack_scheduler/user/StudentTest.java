@@ -406,22 +406,6 @@ public class StudentTest {
 		assertEquals(HASHED_PASSWORD, s.getPassword());
 		assertEquals(MAX_CREDITS, s.getMaxCredits());
 	}
-
-	/**
-	 * 
-	 */
-	@Test 
-	public void testSetId() {
-		//Initialize a valid student 
-		Student s = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD);
-		assertEquals(FIRST_NAME, s.getFirstName());
-		assertEquals(LAST_NAME, s.getLastName());
-		assertEquals(ID, s.getId());
-		assertEquals(EMAIL, s.getEmail());
-		assertEquals(HASHED_PASSWORD, s.getPassword());
-		assertEquals(MAX_CREDITS, s.getMaxCredits());
-		
-	}
 	
 	/**
 	 * Testing equals method

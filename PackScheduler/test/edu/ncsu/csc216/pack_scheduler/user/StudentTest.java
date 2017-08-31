@@ -410,14 +410,41 @@ public class StudentTest {
 	/**
 	 * Testing equals method
 	 */
+	@SuppressWarnings("unlikely-arg-type") //For testing line 259 in Student class under equals() method
 	@Test
 	public void testEqualsObject() {
-		Student s1 = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD);
-		Student s2 = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD);
-		Student s3 = new Student("Foo", "Bar", "foobar", "foobar@ncsu.edu", "drowssap");
+		//Create objects for testing
+		String str = "Student";
+		Student s0 = null;
+		Student s1 = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD, CREDITS);
+		Student s2 = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD, CREDITS);
+		Student s3 = new Student("Foo", LAST_NAME, ID, EMAIL, HASHED_PASSWORD, CREDITS);
+		Student s4 = new Student(FIRST_NAME, "Bar", ID, EMAIL, HASHED_PASSWORD, CREDITS);
+		Student s5 = new Student(FIRST_NAME, LAST_NAME, "foobar", EMAIL, HASHED_PASSWORD, CREDITS);
+		Student s6 = new Student(FIRST_NAME, LAST_NAME, ID, "foobar@ncsu.edu", HASHED_PASSWORD, CREDITS);
+		Student s7 = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, "drowssap", CREDITS);
+		Student s8 = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD, 5);
+		Student s9 = new Student("Foo", "Bar", "foobar", "foobar@ncsu.edu", "drowssap");
 		
-		//Test that two objects with different state are unequal
-		assertFalse(s2.equals(s3));
+		//Test that comparing to a null student returns false
+		assertFalse(s1.equals(s0));
+		
+		//Test that comparing an object of a different class returns false
+		assertFalse(s1.equals(str));
+		
+		//Test for inequality across individual fields
+		assertFalse(s1.equals(s3));
+		assertFalse(s1.equals(s4));
+		assertFalse(s1.equals(s5));
+		assertFalse(s1.equals(s6));
+		assertFalse(s1.equals(s7));
+		assertFalse(s1.equals(s8));
+		
+		//Test that two objects with different state across all fields are unequal
+		assertFalse(s1.equals(s9));
+		
+		//Test that comparing a student to itself returns true
+		assertTrue(s1.equals(s1));
 		
 		//Test that two objects with the same state are equal
 		assertTrue(s1.equals(s2));

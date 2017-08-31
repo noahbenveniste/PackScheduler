@@ -99,7 +99,9 @@ public class StudentRecordIO {
 	 * @throws IllegalArgumentException if a Student cannot be read from the line
 	 */
 	private static Student processStudent(String line) {
-		if (line == null || line.equals("")) {
+		// Impossible for a null line to be passed here, so no 
+		//   check is made.
+		if (line.equals("")) {
 			throw new IllegalArgumentException();
 		}
 
@@ -124,7 +126,8 @@ public class StudentRecordIO {
 			password = readLine.next();
 			maxCredits = readLine.nextInt();
 			readLine.close();
-			return new Student(firstName, lastName, id, email, password, maxCredits);
+			Student s = new Student(firstName, lastName, id, email, password, maxCredits);
+			return s;
 		} catch (NoSuchElementException e) {
 			readLine.close();
 			throw new IllegalArgumentException();

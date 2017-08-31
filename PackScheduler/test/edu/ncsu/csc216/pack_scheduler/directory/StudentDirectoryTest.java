@@ -117,7 +117,6 @@ public class StudentDirectoryTest {
 	public void testAddStudent() {
 		StudentDirectory sd = new StudentDirectory();
 		
-		
 		//Test valid Student
 		sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD, MAX_CREDITS);
 		String [][] studentDirectory = sd.getStudentDirectory();
@@ -126,7 +125,7 @@ public class StudentDirectoryTest {
 		assertEquals(LAST_NAME, studentDirectory[0][1]);
 		assertEquals(ID, studentDirectory[0][2]);
 		
-		//Test invalid password
+		//Test null password
 		try {
 			sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, null, PASSWORD, MAX_CREDITS);
 			fail("Student added w/ null password");
@@ -135,20 +134,64 @@ public class StudentDirectoryTest {
 			assertEquals(1, studentDirectory.length);
 			assertEquals(FIRST_NAME, studentDirectory[0][0]);
 			assertEquals(LAST_NAME, studentDirectory[0][1]);
-			assertEquals(ID, studentDirectory[0][2]);		}
+			assertEquals(ID, studentDirectory[0][2]);		
+		}
+		
+		//Test blank password
+		try {
+			sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, "", PASSWORD, MAX_CREDITS);
+			fail("Student added w/ blank password");
+		} catch(IllegalArgumentException e) {
+			studentDirectory = sd.getStudentDirectory();
+			assertEquals(1, studentDirectory.length);
+			assertEquals(FIRST_NAME, studentDirectory[0][0]);
+			assertEquals(LAST_NAME, studentDirectory[0][1]);
+			assertEquals(ID, studentDirectory[0][2]);		
+		}
+		
+		//Test null repeated password
+		try {
+			sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, null, MAX_CREDITS);
+			fail("Student added w/ null repeated password");
+		} catch(IllegalArgumentException e) {
+			studentDirectory = sd.getStudentDirectory();
+			assertEquals(1, studentDirectory.length);
+			assertEquals(FIRST_NAME, studentDirectory[0][0]);
+			assertEquals(LAST_NAME, studentDirectory[0][1]);
+			assertEquals(ID, studentDirectory[0][2]);		
+		}
+		
+		//Test blank repeated password
+		try {
+			sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, "", MAX_CREDITS);
+			fail("Student added w/ blank repeated password");
+		} catch(IllegalArgumentException e) {
+			studentDirectory = sd.getStudentDirectory();
+			assertEquals(1, studentDirectory.length);
+			assertEquals(FIRST_NAME, studentDirectory[0][0]);
+			assertEquals(LAST_NAME, studentDirectory[0][1]);
+			assertEquals(ID, studentDirectory[0][2]);		
+		}
 		
 		//Test passwords that don't match
-				try {
-					sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD1, MAX_CREDITS);
-					fail("Student added w/ non matching passwords");
-				} catch(IllegalArgumentException e) {
-					studentDirectory = sd.getStudentDirectory();
-					assertEquals(1, studentDirectory.length);
-					assertEquals(FIRST_NAME, studentDirectory[0][0]);
-					assertEquals(LAST_NAME, studentDirectory[0][1]);
-					assertEquals(ID, studentDirectory[0][2]);		}
-				
+		try {
+			sd.addStudent(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD1, MAX_CREDITS);
+			fail("Student added w/ non matching passwords");
+		} catch(IllegalArgumentException e) {
+			studentDirectory = sd.getStudentDirectory();
+			assertEquals(1, studentDirectory.length);
+			assertEquals(FIRST_NAME, studentDirectory[0][0]);
+			assertEquals(LAST_NAME, studentDirectory[0][1]);
+			assertEquals(ID, studentDirectory[0][2]);		
+		}
 		
+		//Test adding a student with a non unique ID
+		sd.addStudent(LAST_NAME, FIRST_NAME, ID, EMAIL, PASSWORD, PASSWORD, MAX_CREDITS);
+		studentDirectory = sd.getStudentDirectory();
+		assertEquals(1, studentDirectory.length);
+		assertEquals(FIRST_NAME, studentDirectory[0][0]);
+		assertEquals(LAST_NAME, studentDirectory[0][1]);
+		assertEquals(ID, studentDirectory[0][2]);
 	}
 
 	/**

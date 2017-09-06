@@ -57,6 +57,23 @@ public class StudentTest {
 		    assertNull(s);
 		}
 		
+		//Test invalid construction using ID parameter
+		s = null;
+		try {
+			s = new Student(FIRST_NAME, LAST_NAME, null, EMAIL, HASHED_PASSWORD, CREDITS);
+			fail();
+		} catch (IllegalArgumentException e){
+			assertNull(s);
+		}
+		
+		s = null;
+		try {
+			s = new Student(FIRST_NAME, LAST_NAME, "", EMAIL, HASHED_PASSWORD, CREDITS);
+			fail();
+		} catch (IllegalArgumentException e){
+			assertNull(s);
+		}
+		
 		//Test for valid student object construction
 		s = new Student(FIRST_NAME, LAST_NAME, ID, EMAIL, HASHED_PASSWORD, CREDITS);
 		try {

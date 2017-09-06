@@ -37,7 +37,6 @@ public class StudentDirectoryTest {
 	/** Non matching password */
 	private static final String PASSWORD1 = "pw1";
 	
-	
 	/**
 	 * Resets course_records.txt for use in other tests.
 	 * @throws Exception if something fails during setup.
@@ -224,6 +223,15 @@ public class StudentDirectoryTest {
 		assertEquals(1, sd.getStudentDirectory().length);
 		sd.saveStudentDirectory("test-files/actual_student_records.txt");
 		checkFiles("test-files/expected_student_records.txt", "test-files/actual_student_records.txt");
+		
+//		//Test if saveStudentDirectory will catch a FileIOException
+//		try{ 
+//			sd.saveStudentDirectory(null);
+//		} catch(NullPointerException e){
+//			
+//		}
+		
+		
 	}
 	
 	/**

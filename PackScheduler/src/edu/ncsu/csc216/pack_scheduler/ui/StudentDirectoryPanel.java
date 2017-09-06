@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import edu.ncsu.csc216.pack_scheduler.user.Student;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

@@ -13,6 +13,7 @@ public class StudentRecordIOTest {
 	public static final String INPUT_VALID_STUDENTS = "test-files/student_records.txt";
 	public static final String INPUT_INVALID_STUDENTS = "test-files/invalid_student_records.txt";
 	public static final String INPUT_VALID_STUDENTS_WITH_BLANK = "test-files/student_records_with_blank_line.txt";
+	public static final String INPUT_DUPLICATE_STUDENTS = "test-files/duplicate_student_records.txt";
 	public static final String EXPECTED_VALID_STUDENTS = "test-files/expected_full_student_records.txt";
 	public static final String EXPECTED_INVALID_STUDENTS = "test-files/expected_student_records.txt";
 
@@ -81,12 +82,23 @@ public class StudentRecordIOTest {
 			fail();
 		}
 		
-		// TODO - add test that reads through duplicate entries in a file.
-		// Duplicates Student records have the same id.
+		// Tests reading a file with duplicate Student records, which are 
+		//   identified by equal, e
+		actual = null;
+		try {
+			actual = StudentRecordIO.readStudentRecords(INPUT_DUPLICATE_STUDENTS);
+			assertNotNull(actual);
+			assertEquals(2, actual.size());
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void testWriteStudentRecords() {
-		// TODO
+		
 	}
 }

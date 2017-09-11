@@ -24,8 +24,14 @@ public class StudentRecordIO {
 
 	/**
 	 * Given a filename of Student records, reads the file and returns the valid
-	 *   Student records in an ArrayList.
-	 *   
+	 *   Student records in an ArrayList. Individual records in the file are handled
+	 *   by the processStudent() helper method. If a Student object cannot be constructed
+	 *   from a line in the file, no Student is added to the ArrayList and the method
+	 *   moves on to the next line. If a Student object can be constructed, but the Student
+	 *   is a duplicate of another Student (i.e. has matching ID), the Student is not added
+	 *   to the ArrayList and the method moves on to the next line.
+	 * If a filename is null, an empty string, or pointing to a non-existent 
+	 *   or unopenable file, a FileNotFoundException is thrown.
 	 * @param filename the file to read records from
 	 * @return an ArrayList of Student records read from file
 	 * @throws FileNotFoundException if the given file cannot be found or accessed
@@ -79,7 +85,13 @@ public class StudentRecordIO {
 	 */
 	public static void writeStudentRecords(String filename, ArrayList<Student> studentDirectory) throws IOException {
 		// IOException is thrown from the File constructor if file cannot be created.
-		PrintStream fileWriter = new PrintStream(new File(filename));
+		// If the filename is null, a NullPointerException is caught and an IOException thrown in its place.
+		PrintStream fileWriter ;
+		try {
+			fileWriter = new PrintStream(new File(filename));
+		} catch(NullPointerException e) {
+			throw new IOException();
+		}
 
 		for (int i = 0; i < studentDirectory.size(); i++) {
 			fileWriter.println(studentDirectory.get(i).toString());
@@ -89,10 +101,11 @@ public class StudentRecordIO {
 	}
 	
 	/**
-	 * Private helper method for readCourseRecords. 
-	 * Given a line of comma-separated values, reads in the values, creates a Student
-	 *   object and returns it.
-	 * If the values cannot be read in, an IllegalArgumentException is thrown.
+	 * Private helper method for readCourseRecords() that processes a single line 
+	 *   in a file of Student records. Given a line of comma-separated values, reads 
+	 *   in the values, creates a Student object and returns it.
+	 * If the values cannot be read from the String, or the values read in are illegal for 
+	 *   creating Student objects, an IllegalArgumentException is thrown.
 	 * 
 	 * @param line a sequence of comma-separated values representing a Student
 	 * @return Student read in from the given line

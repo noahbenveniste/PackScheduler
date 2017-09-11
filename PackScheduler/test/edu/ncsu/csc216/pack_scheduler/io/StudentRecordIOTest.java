@@ -190,9 +190,10 @@ public class StudentRecordIOTest {
 			studentDirectory = StudentRecordIO.readStudentRecords(STUDENT_RECORDS);
 			StudentRecordIO.writeStudentRecords("test-files/actual_student_records.txt", studentDirectory);
 			// Checks that output file was created.
-			assertTrue(new File("test-files/actual_student_records.txt").exists());
+			File outputFile = new File("test-files/actual_student_records.txt");
+			assertTrue(outputFile.exists());
 
-			actualReader = new Scanner(new FileInputStream(new File("test-files/actual_student_records.txt")));
+			actualReader = new Scanner(outputFile);
 			expectedReader = new Scanner(new FileInputStream(new File(EXPECTED_FULL_STUDENT_RECORDS)));
 			
 			// Reads through all lines in "expected_full_student_records.txt". For each line in this file,

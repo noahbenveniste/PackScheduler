@@ -136,7 +136,7 @@ public class StudentRecordIOTest {
 		//   methods, the code below is to account a flaw in the JaCoCo tool, so our
 		//   group can receive full extra credit points for attaining 100% coverage.
 		StudentRecordIO s = new StudentRecordIO();
-		assert(s instanceof StudentRecordIO);
+		assertTrue(s instanceof StudentRecordIO);
 	}
 
 	/**

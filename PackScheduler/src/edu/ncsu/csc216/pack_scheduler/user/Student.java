@@ -229,10 +229,11 @@ public class Student implements Comparable<Student> {
 	
 	/**
 	 * Used to compare two student object. Done by comparing last name, then first
-	 * name, then unity id lexicographically.
+	 * name, then unity id lexicographically i.e. checks if a string field would come
+	 * before or after another string field in a dictionary.
 	 * @param o The student to compare to
-	 * @return 1 if this is lexicographically greater than o, -1 if this is lexicographically
-	 * less than o, and 0 if this and o are equivalent
+	 * @return a negative int if this is lexicographically greater than o, a positive
+	 * int if this is lexicographically less than o, and 0 if this and o are equivalent
 	 */
 	@Override
 	public int compareTo(Student o) {

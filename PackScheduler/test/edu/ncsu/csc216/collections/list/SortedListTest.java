@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.ncsu.csc216.pack_scheduler.user.Student;
+
 public class SortedListTest {
 	
 	/**
@@ -352,5 +354,29 @@ public class SortedListTest {
 	        //Test for the same and different hashCodes
 	        assertEquals(list1.hashCode(), list2.hashCode());
 	        assertNotEquals(list1.hashCode(), list3.hashCode());
+	}
+	
+	/**
+	 * Test to ensure that compareTo() is implemented properly in Student i.e. that Students are
+	 * sorted properly when added to the SortedList
+	 */
+	@Test
+	public void testSortedListWithStudents() {
+		SortedList<Student> list = new SortedList<Student>();
+		Student s1 = new Student("abc","abc","abc456","email@email.com","password"); //first
+		Student s2 = new Student("def","abc","abc123","email@email.com","password"); //second
+		Student s3 = new Student("def","abc","abc456","email@email.com","password"); //third
+		Student s4 = new Student("def","def","def123","email@email.com","password"); //fourth
+		Student s5 = new Student("efg","efg","efg123,","email@email.com","password"); //fifth
+		list.add(s1);
+		list.add(s2);
+		list.add(s3);
+		list.add(s4);
+		list.add(s5);
+		assertEquals(0, list.indexOf(s1));
+		assertEquals(1, list.indexOf(s2));
+		assertEquals(2, list.indexOf(s3));
+		assertEquals(3, list.indexOf(s4));
+		assertEquals(4, list.indexOf(s5));
 	}
 }

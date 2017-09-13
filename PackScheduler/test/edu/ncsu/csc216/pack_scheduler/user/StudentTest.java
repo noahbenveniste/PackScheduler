@@ -425,6 +425,30 @@ public class StudentTest {
 	}
 	
 	/**
+	 * Testing compareTo method
+	 */
+	@Test
+	public void testCompareTo() {
+		Student s1 = new Student("abc","abc","abc123","email@email.com","password");
+		Student s2 = new Student("def","def","def123","email@email.com","password");
+		Student s3 = new Student("efg","efg","efg123,","email@email.com","password");
+		Student s4 = new Student("def","abc","abc123","email@email.com","password");
+		Student s5 = new Student("abc","abc","abc456","email@email.com","password");
+		Student s6 = new Student("abc","abc","abc123","email@email.com","password");
+		
+		assertTrue(s1.compareTo(s2) < 0);
+		assertTrue(s2.compareTo(s1) > 0);
+		assertTrue(s2.compareTo(s3) < 0);
+		assertTrue(s3.compareTo(s2) > 0);
+		assertTrue(s1.compareTo(s3) < 0);
+		assertTrue(s3.compareTo(s1) > 0);
+		
+		assertTrue(s1.compareTo(s4) < 0);
+		assertTrue(s1.compareTo(s5) < 0);
+		assertTrue(s1.compareTo(s6) == 0);
+	}
+	
+	/**
 	 * Testing equals method
 	 */
 	@SuppressWarnings("unlikely-arg-type") //For testing line 259 in Student class under equals() method

@@ -6,7 +6,7 @@ package edu.ncsu.csc216.pack_scheduler.user;
  * @author nnbenven
  * @author kwhildne
  */
-public class Student {
+public class Student implements Comparable<Student> {
 	
 	/** Fields */
 	
@@ -226,6 +226,27 @@ public class Student {
 		//Set the field if all conditions are met
 		this.id = id;
 	}
+	
+	/**
+	 * Used to compare two student object. Done by comparing last name, then first
+	 * name, then unity id lexicographically.
+	 * @param o The student to compare to
+	 * @return 1 if this is lexicographically greater than o, -1 if this is lexicographically
+	 * less than o, and 0 if this and o are equivalent
+	 */
+	@Override
+	public int compareTo(Student o) {
+		if (!this.getLastName().equals(o.getLastName())) { //Compare last names
+			return this.getLastName().compareTo(o.getLastName());
+		} else if (!this.getFirstName().equals(o.getFirstName())) { //Compare first names
+			return this.getFirstName().compareTo(o.getFirstName());
+		} else if (!this.getId().equals(o.getId())) { //Compare unity ids
+			return this.getId().compareTo(o.getId());
+			
+		}
+		//If all fields are equal, return 0
+		return 0;
+	}
 
 	/**
 	 * Generates a hashCode for Student using all fields.
@@ -287,5 +308,4 @@ public class Student {
 		return this.getFirstName() + "," + this.getLastName() + "," + this.getId() + "," 
 			+ this.getEmail() + "," + this.getPassword() + "," + this.getMaxCredits();
 	}
-	
 }

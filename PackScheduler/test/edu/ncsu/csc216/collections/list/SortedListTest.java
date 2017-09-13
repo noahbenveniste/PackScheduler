@@ -5,14 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class SortedListTest {
-
+	
+	/**
+	 * @author Kevin Hildner
+	 */
 	@Test
 	public void testSortedList() {
 		SortedList<String> list = new SortedList<String>();
 		assertEquals(0, list.size());
 		assertFalse(list.contains("apple"));
 		
-		//TODO Test that the list grows by adding at least 11 elements
+		//Test that the list grows by adding at least 11 elements
 		//Remember the list's initial capacity is 10
 		list.add("a");
 		list.add("b");
@@ -30,6 +33,9 @@ public class SortedListTest {
 		
 	}
 
+	/**
+	 * @author Noah Benveniste
+	 */
 	@Test
 	public void testAdd() {
 		SortedList<String> list = new SortedList<String>();
@@ -38,11 +44,42 @@ public class SortedListTest {
 		assertEquals(1, list.size());
 		assertEquals("banana", list.get(0));
 		
-		//TODO Test adding to the front, middle and back of the list
+		//Test adding to the front, middle and back of the list
+		list.add("apple");
+		assertEquals(2, list.size());
+		assertEquals("apple", list.get(0));
 		
-		//TODO Test adding a null element
+		list.add("cucumber");
+		assertEquals(3, list.size());
+		assertEquals("cucumber", list.get(2));
 		
-		//TODO Test adding a duplicate element
+		list.add("avocado");
+		assertEquals(4, list.size());
+		assertEquals("avocado", list.get(1));
+		
+		//Test adding a null element
+		try {
+			list.add(null);
+			fail();
+		} catch (NullPointerException e) {
+			assertEquals(4, list.size());
+			assertEquals("apple", list.get(0));
+			assertEquals("avocado", list.get(1));
+			assertEquals("banana", list.get(2));
+			assertEquals("cucumber", list.get(3));
+		}
+		
+		//Test adding a duplicate element
+		try {
+			list.add("banana");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals(4, list.size());
+			assertEquals("apple", list.get(0));
+			assertEquals("avocado", list.get(1));
+			assertEquals("banana", list.get(2));
+			assertEquals("cucumber", list.get(3));
+		}
 	}
 	
 	@Test

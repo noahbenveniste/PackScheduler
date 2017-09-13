@@ -7,6 +7,7 @@ import org.junit.Test;
 public class SortedListTest {
 	
 	/**
+	 * Unit test for testing the initial creation of a SortedList
 	 * @author Kevin Hildner
 	 */
 	@Test
@@ -34,6 +35,7 @@ public class SortedListTest {
 	}
 
 	/**
+	 * Unit test for adding objects to a SortedList
 	 * @author Noah Benveniste
 	 */
 	@Test

@@ -132,25 +132,56 @@ public class SortedListTest {
 		}
 	}
 	
+	/**
+	 * Tests the remove function of a sorted list
+	 * @author Kevin Hildner
+	 */
 	@Test
 	public void testRemove() {
 		SortedList<String> list = new SortedList<String>();
 		
-		//TODO Test removing from an empty list
-		
-		//TODO Add some elements to the list - at least 4
-		
-		//TODO Test removing an element at an index < 0
-		
+		//Test removing from an empty list
+		try {
+			list.remove(0);
+			fail();
+		} catch(IndexOutOfBoundsException e) {
+			assertEquals(0, list.size());
+		}
+		//Add some elements to the list - at least 4
+		list.add("apple");
+		list.add("banana");
+		list.add("carrot");
+		list.add("squash");
+		//Test removing an element at an index < 0
+		try {
+			list.remove(-1);
+			fail();
+		} catch(IndexOutOfBoundsException e) {
+			assertEquals(4, list.size());
+		}
 		//TODO Test removing an element at size
-		
-		//TODO Test removing a middle element
-		
-		//TODO Test removing the last element
-		
-		//TODO Test removing the first element
-		
-		//TODO Test removing the last element
+		try {
+			list.remove(list.size());
+			fail();
+		} catch(IndexOutOfBoundsException e) {
+			assertEquals(4, list.size());
+		}
+		//Test removing a middle element
+		assertEquals("banana", list.remove(1));
+		assertFalse(list.contains("banana"));
+		assertEquals(3, list.size());
+		//Test removing the last element
+		assertEquals("squash", list.remove(3));
+		assertFalse(list.contains("squash"));
+		assertEquals(2, list.size());
+		//Test removing the first element
+		assertEquals("apple", list.remove(0));
+		assertFalse(list.contains("apple"));
+		assertEquals(1, list.size());
+		//Test removing the last element
+		assertEquals("carrot", list.remove(0));
+		assertFalse(list.contains("carrot"));
+		assertTrue(list.isEmpty());
 	}
 	
 	@Test

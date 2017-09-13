@@ -219,27 +219,43 @@ public class SortedListTest {
 		}
 		
 	}
-	
+	/**
+	* Tests clear() method to ensure that a cleared list has no elements remaining.
+	* @author Daniel Mills
+	*/
 	@Test
 	public void testClear() {
-		SortedList<String> list = new SortedList<String>();
+	        SortedList<String> list = new SortedList<String>();
 
-		//TODO Add some elements
-		
-		//TODO Clear the list
-		
-		//TODO Test that the list is empty
+	        //Add some elements
+	        list.add("apple");
+	        list.add("banana");
+	        list.add("carrot");
+	        assertEquals(3, list.size());
+
+	        //Clear the list
+	        list.clear();
+
+	        //Test that the list is empty
+	        assertEquals(0, list.size());
 	}
 
-	@Test
+	/**
+	* Tests isEmpty() method to ensure that lists with zero elements are
+	*   considered empty.
+	* @author Daniel Mills
+	*/
 	public void testIsEmpty() {
-		SortedList<String> list = new SortedList<String>();
-		
-		//TODO Test that the list starts empty
-		
-		//TODO Add at least one element
-		
-		//TODO Check that the list is no longer empty
+	        SortedList<String> list = new SortedList<String>();
+
+	        //Test that the list starts empty
+	        assertTrue(list.isEmpty());
+
+	        //Add at least one element
+	        list.add("apple"); 
+	            
+	        //Check that the list is no longer empty
+	        assertFalse(list.isEmpty()); 
 	}
 
 	/**
@@ -305,16 +321,36 @@ public class SortedListTest {
 		assertFalse(list3.equals(list2));
 	}
 	
+	/**
+	* Tests hashCode() method to ensure that if a list contains the same elements,
+	*   it should generate an identical hashcode.
+	* @author Daniel Mills
+	*/
 	@Test
 	public void testHashCode() {
-		SortedList<String> list1 = new SortedList<String>();
-		SortedList<String> list2 = new SortedList<String>();
-		SortedList<String> list3 = new SortedList<String>();
-		
-		//TODO Make two lists the same and one list different
-		
-		//TODO Test for the same and different hashCodes
-	}
+	        SortedList<String> list1 = new SortedList<String>();
+	        SortedList<String> list2 = new SortedList<String>();
+	        SortedList<String> list3 = new SortedList<String>();
 
+	        // Tests hashcodes of two empty lists
+	        assertEquals(list1.hashCode(), list2.hashCode());
+
+
+	        //Make two lists the same and one list different
+	        list1.add("apple");
+	        list1.add("banana");
+	        list1.add("carrot");
+
+	        list2.add("apple");
+	        list2.add("banana");
+	        list2.add("carrot");
+
+	        list3.add("apple");
+	        list3.add("banana");
+	        list3.add("A SINGLE DIFFERENT STRING");
+
+	        //Test for the same and different hashCodes
+	        assertEquals(list1.hashCode(), list2.hashCode());
+	        assertNotEquals(list1.hashCode(), list3.hashCode());
+	}
 }
- 

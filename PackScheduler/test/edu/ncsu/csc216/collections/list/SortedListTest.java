@@ -171,7 +171,7 @@ public class SortedListTest {
 		assertFalse(list.contains("banana"));
 		assertEquals(3, list.size());
 		//Test removing the last element
-		assertEquals("squash", list.remove(3));
+		assertEquals("squash", list.remove(2));
 		assertFalse(list.contains("squash"));
 		assertEquals(2, list.size());
 		//Test removing the first element
@@ -184,18 +184,39 @@ public class SortedListTest {
 		assertTrue(list.isEmpty());
 	}
 	
+	/**
+	 * Unit test for testing indexOf() method
+	 * @author Noah Benveniste
+	 * @author Kevin Hildner
+	 */
 	@Test
 	public void testIndexOf() {
 		SortedList<String> list = new SortedList<String>();
 		
-		//TODO Test indexOf on an empty list
+		//Test indexOf on an empty list
+		assertEquals(-1, list.indexOf("apple"));
 		
-		//TODO Add some elements
+		//Add some elements
+		list.add("bird");
+		list.add("cat");
+		list.add("dog");
+		list.add("lizard");
 		
-		//TODO Test various calls to indexOf for elements in the list
+		//Test various calls to indexOf for elements in the list
 		//and not in the list
+		assertEquals(0, list.indexOf("bird"));
+		assertEquals(1, list.indexOf("cat"));
+		assertEquals(2, list.indexOf("dog"));
+		assertEquals(3, list.indexOf("lizard"));
+		assertEquals(-1, list.indexOf("zanzibar"));
 		
-		//TODO Test checking the index of null
+		//Test checking the index of null
+		try {
+			list.indexOf(null);
+			fail();
+		} catch (NullPointerException e) {
+			assertEquals(4, list.size());
+		}
 		
 	}
 	
@@ -221,26 +242,67 @@ public class SortedListTest {
 		//TODO Check that the list is no longer empty
 	}
 
+	/**
+	 * Unit test for testing the contains() method
+	 * @author Noah Benveniste
+	 */
 	@Test
 	public void testContains() {
 		SortedList<String> list = new SortedList<String>();
 		
-		//TODO Test the empty list case
+		//Test the empty list case
+		assertEquals(false, list.contains("apple"));
 		
-		//TODO Add some elements
+		//Add some elements
+		list.add("dog");
+		list.add("cat");
+		list.add("bird");
 		
-		//TODO Test some true and false cases
+		//Test some true and false cases
+		assertEquals(true, list.contains("dog"));
+		assertEquals(2, list.indexOf("dog"));
+		assertEquals(false, list.contains("dogs"));
+		assertEquals(true, list.contains("cat"));
+		assertEquals(1, list.indexOf("cat"));
+		assertEquals(true, list.contains("bird"));
+		assertEquals(0, list.indexOf("bird"));
+		assertEquals(false, list.contains("CAT"));
+		assertEquals(false, list.contains("lizard"));
 	}
 	
+	/**
+	 * Unit test for testing equals() method
+	 * @author Noah Benveniste
+	 */
 	@Test
 	public void testEquals() {
 		SortedList<String> list1 = new SortedList<String>();
 		SortedList<String> list2 = new SortedList<String>();
 		SortedList<String> list3 = new SortedList<String>();
 		
-		//TODO Make two lists the same and one list different
+		//Make two lists the same and one list different
+		list1.add("bird");
+		list1.add("cat");
+		list1.add("dog");
+		list1.add("lizard");
 		
-		//TODO Test for equality and non-equality
+		list2.add("apple");
+		list2.add("carrot");
+		list2.add("cucumber");
+		list2.add("kale");
+		
+		list3.add("bird");
+		list3.add("cat");
+		list3.add("dog");
+		list3.add("lizard");
+		
+		//Test for equality and non-equality
+		assertTrue(list1.equals(list3));
+		assertTrue(list3.equals(list1));
+		assertFalse(list1.equals(list2));
+		assertFalse(list2.equals(list1));
+		assertFalse(list2.equals(list3));
+		assertFalse(list3.equals(list2));
 	}
 	
 	@Test

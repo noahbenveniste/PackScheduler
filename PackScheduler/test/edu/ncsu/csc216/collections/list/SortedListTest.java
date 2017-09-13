@@ -84,6 +84,11 @@ public class SortedListTest {
 		}
 	}
 	
+	/**
+	 * Tests edge cases of get() method, including retrieval from empty
+	 *   lists, and invalid indeces.
+	 * @author Daniel Mills
+	 */
 	@Test
 	public void testGet() {
 		SortedList<String> list = new SortedList<String>();
@@ -93,14 +98,38 @@ public class SortedListTest {
 		//here.  Instead this test method should focus on the error 
 		//and boundary cases.
 		
-		//TODO Test getting an element from an empty list
+		//Test getting an element from an empty list
+		try {
+			assertTrue(list.isEmpty());
+			list.get(0);
+			fail();
+		} catch(IndexOutOfBoundsException e) {
+			assertTrue(list.isEmpty());
+		}
 		
-		//TODO Add some elements to the list
+		//Add some elements to the list
+		list.add("apple");
+		list.add("banana");
+		list.add("carrot");
 		
-		//TODO Test getting an element at an index < 0
 		
-		//TODO Test getting an element at size
+		//Test getting an element at an index < 0
+		try {
+			assertEquals(3, list.size());
+			list.get(-1);
+			fail();
+		} catch(IndexOutOfBoundsException e) {
+			assertEquals(3, list.size());
+		}
 		
+		//Test getting an element at size
+		try {
+			assertEquals(3, list.size());
+			list.get(list.size());
+			fail();
+		} catch(IndexOutOfBoundsException e) {
+			assertEquals(3, list.size());
+		}
 	}
 	
 	@Test

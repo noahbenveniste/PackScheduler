@@ -5,10 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import edu.ncsu.csc216.collections.list.SortedList;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 
 /**
@@ -36,14 +36,14 @@ public class StudentRecordIO {
 	 * @return an ArrayList of Student records read from file
 	 * @throws FileNotFoundException if the given file cannot be found or accessed
 	 */
-	public static ArrayList<Student> readStudentRecords(String filename) throws FileNotFoundException {
+	public static SortedList<Student> readStudentRecords(String filename) throws FileNotFoundException {
 		Scanner fileReader;
 		try {
 			fileReader = new Scanner(new FileInputStream(filename));
 		} catch(NullPointerException e) {
 			throw new FileNotFoundException();
 		}
-		ArrayList<Student> students = new ArrayList<Student>();
+		SortedList<Student> students = new SortedList<Student>();
 		// While the reader has more lines, delegates to the processStudent
 		// helper method to read in Students.
 		while (fileReader.hasNextLine()) {
@@ -83,7 +83,7 @@ public class StudentRecordIO {
 	 * @param studentDirectory an ArrayList of Students to write to file
 	 * @throws IOException if the file cannot be created
 	 */
-	public static void writeStudentRecords(String filename, ArrayList<Student> studentDirectory) throws IOException {
+	public static void writeStudentRecords(String filename, SortedList<Student> studentDirectory) throws IOException {
 		// IOException is thrown from the File constructor if file cannot be created.
 		// If the filename is null, a NullPointerException is caught and an IOException thrown in its place.
 		PrintStream fileWriter ;

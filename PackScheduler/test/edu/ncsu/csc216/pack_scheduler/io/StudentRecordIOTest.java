@@ -9,11 +9,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import edu.ncsu.csc216.collections.list.SortedList;
 import java.util.Scanner;
-
 import org.junit.Test;
-
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 
 /**
@@ -45,9 +43,9 @@ public class StudentRecordIOTest {
 	 */
 	@Test
 	public void testReadStudentRecords() {
-		// An ArrayList of Students that holds the output of 
+		// A SortedList of Students that holds the output of 
 		//   the readStudentRecords() methods. 
-		ArrayList<Student> actualStudents = new ArrayList<Student>();
+		SortedList<Student> actualStudents = new SortedList<Student>();
 		actualStudents = null;
 
 		// Tests passing an empty string filename.
@@ -77,13 +75,14 @@ public class StudentRecordIOTest {
 		// Tests reading an empty line inserted between non-empty lines.
 		// No exceptions should be thrown.
 		try {
-			ArrayList<Student> expected = StudentRecordIO.readStudentRecords(EXPECTED_FULL_STUDENT_RECORDS);
+			SortedList<Student> expected = StudentRecordIO.readStudentRecords(EXPECTED_FULL_STUDENT_RECORDS);
 			actualStudents = StudentRecordIO.readStudentRecords(STUDENT_RECORDS_WITH_BLANK);
 
 			assertEquals(expected.size(), actualStudents.size());
-			// Compares each Student in the two ArrayListactualStudents. Since VALID_STUDENTS_WITH_BLANK
-			//   has the same records as VALID_STUDENTS, except for a single blank line 
-			//   inserted, the two should produce identical lists of Students.
+			// Compares each Student in the two SortedLists, expected and actualStudents. 
+			// Since VALID_STUDENTS_WITH_BLANK has the same records as VALID_STUDENTS, 
+			// except for a single blank line inserted, the two should produce identical 
+			// lists of Students.
 			for (int i = 0; i < expected.size(); i++) {
 				// assertEquals will use the overridden equals() method of 
 				//   Student, not of Object.
@@ -148,7 +147,7 @@ public class StudentRecordIOTest {
 	@Test
 	public void testWriteStudentRecords() {
 		// Tests passing a null filename. File class should throw an IOException.
-		ArrayList<Student> studentDirectory = new ArrayList<Student>();
+		SortedList<Student> studentDirectory = new SortedList<Student>();
 		try {
 			StudentRecordIO.writeStudentRecords(null, studentDirectory);
 			fail();
@@ -172,7 +171,7 @@ public class StudentRecordIOTest {
 			// Do nothing
 		}
 
-		// Tests passing an empty ArrayList of Students. File should be created, but containing no records.
+		// Tests passing an empty SortedList of Students. File should be created, but containing no records.
 		try {
 			StudentRecordIO.writeStudentRecords("test-files/blank_file.txt", studentDirectory);
 		} catch (Exception e) {
@@ -196,7 +195,7 @@ public class StudentRecordIOTest {
 		Scanner actualReader = null;
 		Scanner expectedReader = null;
 		try {
-			// Reads in an ArrayList of 10 valid Student records. 
+			// Reads in a SortedList of 10 valid Student records. 
 			studentDirectory = StudentRecordIO.readStudentRecords(STUDENT_RECORDS);
 			StudentRecordIO.writeStudentRecords("test-files/actual_student_records.txt", studentDirectory);
 			// Checks that output file was created.

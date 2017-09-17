@@ -9,8 +9,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import edu.ncsu.csc216.collections.list.SortedList;
 import java.util.Scanner;
+
+import org.junit.Before;
 import org.junit.Test;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 
@@ -34,6 +39,85 @@ public class StudentRecordIOTest {
 	public static final String EXPECTED_FULL_STUDENT_RECORDS = "test-files/expected_full_student_records.txt";
 	/** Relative path to file containing a single Student record for Zahir King */
 	public static final String EXPECTED_STUDENT_RECORDS = "test-files/expected_student_records.txt";
+	
+	/** String representing the valid student Zahir King */
+	private String validStudent0 = "Zahir,King,zking,orci.Donec@ametmassaQuisque.com,pw,15";
+	/** String representing the valid student Cassandra Schwartz */
+	private String validStudent1 = "Cassandra,Schwartz,cschwartz,semper@imperdietornare.co.uk,pw,4";
+	/** String representing the valid student Shannon Hansen */
+	private String validStudent2 = "Shannon,Hansen,shansen,convallis.est.vitae@arcu.ca,pw,14";
+	/** String representing the valid student Demetrius Austin */
+	private String validStudent3 = "Demetrius,Austin,daustin,Curabitur.egestas.nunc@placeratorcilacus.co.uk,pw,18";
+	/** String representing the valid student Raymond Brennan */
+	private String validStudent4 = "Raymond,Brennan,rbrennan,litora.torquent@pellentesquemassalobortis.ca,pw,12";
+	/** String representing the valid student Emerald Frost */
+	private String validStudent5 = "Emerald,Frost,efrost,adipiscing@acipsumPhasellus.edu,pw,3";
+	/** String representing the valid student Lane Berg */
+	private String validStudent6 = "Lane,Berg,lberg,sociis@non.org,pw,14";
+	/** String representing the valid student Griffith Stone */
+	private String validStudent7 = "Griffith,Stone,gstone,porta@magnamalesuadavel.net,pw,17";
+	/** String representing the valid student Althea Hicks */
+	private String validStudent8 = "Althea,Hicks,ahicks,Phasellus.dapibus@luctusfelis.com,pw,11";
+	/** String representing the valid student Dylan Nolan */
+	private String validStudent9 = "Dylan,Nolan,dnolan,placerat.Cras.dictum@dictum.net,pw,5";
+
+	/** A String array of valid Students for use in tests */
+	private String [] validStudents = {validStudent0, validStudent1, validStudent2, validStudent3, validStudent4, validStudent5,
+	        validStudent6, validStudent7, validStudent8, validStudent9};
+
+	/** A String representing a hashed password. It will always be a SHA-256 hash of "pw" */
+	private String hashPW;
+	/** A string identifying the SHA-256 hashing algorithm for use in creating a MessageDigest */
+	private static final String HASH_ALGORITHM = "SHA-256";
+
+	/**
+	 * Hashes the passwords of all representations of Students in the validStudents array of Strings.
+	 */
+	@Before
+	public void setUp() {
+	    try {
+	        String password = "pw";
+	        MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+	        digest.update(password.getBytes());
+	        hashPW = new String(digest.digest());
+	        
+	        for (int i = 0; i < validStudents.length; i++) {
+	            validStudents[i] = validStudents[i].replace(",pw,", "," + hashPW + ",");
+	        }
+	    } catch (NoSuchAlgorithmException e) {
+	        fail("Unable to create hash during setup");
+	    }
+	}
+
+	/**
+	 * Provided method for comparing the contents of two files, line by line.
+	 * 
+	 * @param expFile a file of the expected results for a test
+	 * @param actFile a file of the actual results for a test
+	 */
+	private void checkFiles(String expFile, String actFile) {
+	    try {
+	        Scanner expScanner = new Scanner(new FileInputStream(expFile));
+	        Scanner actScanner = new Scanner(new FileInputStream(actFile));
+	        
+	        while (expScanner.hasNextLine()  && actScanner.hasNextLine()) {
+	            String exp = expScanner.nextLine();
+	            String act = actScanner.nextLine();
+	            assertEquals("Expected: " + exp + " Actual: " + act, exp, act);
+	        }
+	        if (expScanner.hasNextLine()) {
+	            fail("The expected results expect another line " + expScanner.nextLine());
+	        }
+	        if (actScanner.hasNextLine()) {
+	            fail("The actual results has an extra, unexpected line: " + actScanner.nextLine());
+	        }
+	        
+	        expScanner.close();
+	        actScanner.close();
+	    } catch (IOException e) {
+	        fail("Error reading files.");
+	    }
+	}
 
 	/**
 	 * Tests readStudentRecords() method of StudentRecordIO.
@@ -191,42 +275,39 @@ public class StudentRecordIOTest {
 			}
 		}
 		
-		// Tests writing multiple Student records to a file. 
-		Scanner actualReader = null;
-		Scanner expectedReader = null;
+		// Tests writing out valid records.
 		try {
-			// Reads in a SortedList of 10 valid Student records. 
-			studentDirectory = StudentRecordIO.readStudentRecords(STUDENT_RECORDS);
+		studentDirectory = StudentRecordIO.readStudentRecords(STUDENT_RECORDS);
 			StudentRecordIO.writeStudentRecords("test-files/actual_student_records.txt", studentDirectory);
-			// Checks that output file was created.
-			File outputFile = new File("test-files/actual_student_records.txt");
-			assertTrue(outputFile.exists());
-
-			actualReader = new Scanner(outputFile);
-			expectedReader = new Scanner(new FileInputStream(new File(EXPECTED_FULL_STUDENT_RECORDS)));
-			
-			// Reads through all lines in "expected_full_student_records.txt". For each line in this file,
-			//   checks that the actual output file also has a line. If it doesn't, the test fails, as the two files
-			//   should have an equal number of lines. If the output file does have another line, this line is compared
-			//   for equality with the next line in the expected output file.
-			while (expectedReader.hasNextLine()) {
-				if (!actualReader.hasNextLine()) {
-					fail("Actual output file has less lines than expected.");
-				} 
-				assertEquals(expectedReader.nextLine(), actualReader.nextLine());
-			}
-			// Checks that "actual_student_records.txt" doesn't have additional records after
-			//   all lines in "expected_full_student_records.txt" have been matched.
-			assertFalse(actualReader.hasNext());
 		} catch (Exception e) {
 			fail();
-		} finally {
-			if (actualReader != null) {
-				actualReader.close();
-			}
-			if (expectedReader != null) {
-				expectedReader.close();
-			}
 		}
+
+		// Checks that output file was created.
+		File outputFile = new File("test-files/actual_student_records.txt");
+		assertTrue(outputFile.exists());
+
+		// Checks that the output file matches the expected.
+		checkFiles(EXPECTED_FULL_STUDENT_RECORDS, "test-files/actual_student_records.txt");
+	}
+	
+	/**
+	 * Tests writing to a directory for which the user running the program doesn't have access to.
+	 * The expected behavior is that an error message is returned, although we aren't able to
+	 *   check that the file actually wasn't created. 
+	 */
+	@Test
+	public void testWriteStudentRecordsNoPermissions() {
+	    SortedList<Student> students = new SortedList<Student>();
+	    students.add(new Student("Zahir", "King", "zking", "orci.Donec@ametmassaQuisque.com", hashPW, 15));
+	    //Assumption that you are using a hash of "pw" stored in hashPW
+	    
+	    try {
+	        StudentRecordIO.writeStudentRecords("/home/sesmith5/actual_student_records.txt", students);
+	        fail("Attempted to write to a directory location that doesn't exist or without the appropriate permissions and the write happened.");
+	    } catch (IOException e) {
+	        assertEquals("/home/sesmith5/actual_student_records.txt (Permission denied)", e.getMessage());
+	        //The actual error message on Jenkins!
+	    }
 	}
 }

@@ -6,6 +6,13 @@ import org.junit.Test;
 
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 
+/**
+ * Tests the provided SortedList class.
+ * 
+ * @author demills
+ * @author nnbenven
+ * @author kwhildne
+ */
 public class SortedListTest {
 	
 	/**
@@ -88,7 +95,7 @@ public class SortedListTest {
 	
 	/**
 	 * Tests edge cases of get() method, including retrieval from empty
-	 *   lists, and invalid indeces.
+	 *   lists, and invalid indices.
 	 * @author Daniel Mills
 	 */
 	@Test
@@ -161,7 +168,7 @@ public class SortedListTest {
 		} catch(IndexOutOfBoundsException e) {
 			assertEquals(4, list.size());
 		}
-		//TODO Test removing an element at size
+		//Test removing an element at size
 		try {
 			list.remove(list.size());
 			fail();
@@ -325,7 +332,7 @@ public class SortedListTest {
 	
 	/**
 	* Tests hashCode() method to ensure that if a list contains the same elements,
-	*   it should generate an identical hashcode.
+	*   it generates an identical hashcode.
 	* @author Daniel Mills
 	*/
 	@Test
@@ -363,11 +370,11 @@ public class SortedListTest {
 	@Test
 	public void testSortedListWithStudents() {
 		SortedList<Student> list = new SortedList<Student>();
-		Student s1 = new Student("abc","abc","abc456","email@email.com","password"); //first
-		Student s2 = new Student("def","abc","abc123","email@email.com","password"); //second
-		Student s3 = new Student("def","abc","abc456","email@email.com","password"); //third
-		Student s4 = new Student("def","def","def123","email@email.com","password"); //fourth
-		Student s5 = new Student("efg","efg","efg123,","email@email.com","password"); //fifth
+		Student s1 = new Student("abc", "abc", "abc456", "email@email.com", "password"); //first
+		Student s2 = new Student("def", "abc", "abc123", "email@email.com", "password"); //second
+		Student s3 = new Student("def", "abc", "abc456", "email@email.com", "password"); //third
+		Student s4 = new Student("def", "def", "def123", "email@email.com", "password"); //fourth
+		Student s5 = new Student("efg", "efg", "efg123", "email@email.com", "password"); //fifth
 		list.add(s1);
 		list.add(s2);
 		list.add(s3);

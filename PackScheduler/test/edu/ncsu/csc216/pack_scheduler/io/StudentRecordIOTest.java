@@ -308,6 +308,7 @@ public class StudentRecordIOTest {
 	    } catch (IOException e) {
 	    	// Modified the provided test so that it runs correctly both on Jenkins and locally.
 	    	boolean b;
+	    	assertEquals("should fail", System.getProperty("user.name"));
 	    	if (e.getMessage().equals("/home/sesmith5/actual_student_records.txt (Permission denied)") ||
 	    		e.getMessage().equals("/home/sesmith5/actual_student_records.txt (No such file or directory)")) 
 	    	{

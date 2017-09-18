@@ -193,9 +193,9 @@ public class StudentDirectoryTest {
 		assertEquals(ID, studentDirectory[0][2]);
 		
 		// Test adding a duplicate Student, determined by ID, who shouldn't be added to the StudentDirectory.
-		assertEquals(1,sd.getStudentDirectory().length);
+		assertEquals(1, sd.getStudentDirectory().length);
 		sd.addStudent("Steven", "Seagal", ID, "sseagal@ncsu.edu", PASSWORD, PASSWORD, MAX_CREDITS);
-		assertEquals(1,sd.getStudentDirectory().length);
+		assertEquals(1, sd.getStudentDirectory().length);
 		assertEquals(FIRST_NAME, studentDirectory[0][0]);
 		
 		// Tests adding a second Student, with a different ID than the first.

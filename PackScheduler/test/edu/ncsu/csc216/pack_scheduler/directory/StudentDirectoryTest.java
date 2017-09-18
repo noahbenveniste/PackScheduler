@@ -184,13 +184,33 @@ public class StudentDirectoryTest {
 			assertEquals(ID, studentDirectory[0][2]);		
 		}
 		
-		//Test adding a student with a non unique ID
+		//Test adding a student. 
 		sd.addStudent(LAST_NAME, FIRST_NAME, ID, EMAIL, PASSWORD, PASSWORD, MAX_CREDITS);
 		studentDirectory = sd.getStudentDirectory();
 		assertEquals(1, studentDirectory.length);
 		assertEquals(FIRST_NAME, studentDirectory[0][0]);
 		assertEquals(LAST_NAME, studentDirectory[0][1]);
 		assertEquals(ID, studentDirectory[0][2]);
+		
+		// Test adding a duplicate Student, determined by ID, who shouldn't be added to the StudentDirectory.
+		assertEquals(1,sd.getStudentDirectory().length);
+		sd.addStudent("Steven", "Seagal", ID, "sseagal@ncsu.edu", PASSWORD, PASSWORD, MAX_CREDITS);
+		assertEquals(1,sd.getStudentDirectory().length);
+		assertEquals(FIRST_NAME, studentDirectory[0][0]);
+		
+		// Tests adding a second Student, with a different ID than the first.
+		sd.addStudent("Bat", "Man", "bman", "batman@ncsu.edu", PASSWORD, PASSWORD, MAX_CREDITS);
+		studentDirectory = sd.getStudentDirectory();
+		assertEquals(2, studentDirectory.length);
+		// Since studentDirectory is implemented with a SortedList, and Student's are sorted in
+		//   lexicographic order by last name, then first, then ID, Bat Man should be the second
+		//   entry in the directory.
+		assertEquals(FIRST_NAME, studentDirectory[0][0]);
+		assertEquals(LAST_NAME, studentDirectory[0][1]);
+		assertEquals(ID, studentDirectory[0][2]);
+		assertEquals("Bat", studentDirectory[1][0]);
+		assertEquals("Man", studentDirectory[1][1]);
+		assertEquals("bman", studentDirectory[1][2]);	// Tests adding another student
 	}
 
 	/**
@@ -224,14 +244,13 @@ public class StudentDirectoryTest {
 		sd.saveStudentDirectory("test-files/actual_student_records.txt");
 		checkFiles("test-files/expected_student_records.txt", "test-files/actual_student_records.txt");
 		
-//		//Test if saveStudentDirectory will catch a FileIOException
-//		try{ 
-//			sd.saveStudentDirectory(null);
-//		} catch(NullPointerException e){
-//			
-//		}
-		
-		
+		// Test if saveStudentDirectory will catch a FileIOException
+		try{ 
+			sd.saveStudentDirectory("/abc/def/these_directories_dont_exist.jpg");
+			fail();
+		} catch(IllegalArgumentException e){
+			assertEquals("Unable to write to file /abc/def/these_directories_dont_exist.jpg", e.getMessage());
+		}
 	}
 	
 	/**
@@ -254,5 +273,4 @@ public class StudentDirectoryTest {
 			fail("Error reading files.");
 		}
 	}
-
 }

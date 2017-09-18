@@ -294,7 +294,10 @@ public class StudentRecordIOTest {
 	/**
 	 * Tests writing to a directory for which the user running the program doesn't have access to.
 	 * The expected behavior is that an error message is returned, although we aren't able to
-	 *   check that the file actually wasn't created. 
+	 *   check that the file actually wasn't created. If the test is run on Jenkins, determined
+	 *   by the return value of System.getProperty("user.name"), the IOException thrown will
+	 *   return a message of "...(Permission denied)" rather than "...(No such file or directory)".
+	 *   Therefore, two different assertions are provided to account for both possibilities.
 	 */
 	@Test
 	public void testWriteStudentRecordsNoPermissions() {
@@ -306,18 +309,16 @@ public class StudentRecordIOTest {
 	        StudentRecordIO.writeStudentRecords("/home/sesmith5/actual_student_records.txt", students);
 	        fail("Attempted to write to a directory location that doesn't exist or without the appropriate permissions and the write happened.");
 	    } catch (IOException e) {
-	    	// Modified the provided test so that it runs correctly both on Jenkins and locally.
-	    	boolean b;
-	    	assertEquals("should fail", System.getProperty("user.name"));
-	    	if (e.getMessage().equals("/home/sesmith5/actual_student_records.txt (Permission denied)") ||
-	    		e.getMessage().equals("/home/sesmith5/actual_student_records.txt (No such file or directory)")) 
-	    	{
-	    		b = true;
-	    	} else {
-	    		b = false;
+
+	    	// I modified the provided test so that it runs correctly both on Jenkins and locally.
+	    	// If the test is run on Jenkins, a "Permission denied" IOException should be thrown.
+	    	if (System.getProperty("user.name").equals("jenkins")) {
+	    		assertEquals("/home/sesmith5/actual_student_records.txt (Permission denied)", e.getMessage());
+	    	} else { 
+	    		// If the test is run locally, i.e. by any user other than Jenkins, 
+	    		//   a "No such file" exception should be thrown.
+	    		assertEquals("/home/sesmith5/actual_student_records.txt (No such file or directory)", e.getMessage());
 	    	}
-	    	assertTrue(b);
-	        //The actual error message on Jenkins!
 	    }
 	}
 }

@@ -249,7 +249,7 @@ public class StudentRecordIOTest {
 		
 		// Tests passing a filename the Student shouldn't have access to.
 		try {
-			StudentRecordIO.writeStudentRecords(File.separator + "test_file.txt", studentDirectory);
+			StudentRecordIO.writeStudentRecords(File.separator + File.separator + "test_file.txt", studentDirectory);
 			fail();
 		} catch (IOException e) {
 			// Do nothing
@@ -306,7 +306,8 @@ public class StudentRecordIOTest {
 	    //Assumption that you are using a hash of "pw" stored in hashPW
 
 	    try {
-	        StudentRecordIO.writeStudentRecords("/home/sesmith5/actual_student_records.txt".replaceAll("/",  File.separator), students);
+	        StudentRecordIO.writeStudentRecords("/home/sesmith5/actual_student_records.txt".replaceAll("/",  File.separator + File.separator), students);
+	        //StudentRecordIO.writeStudentRecords("asdf.txt", students);
 	        fail("Attempted to write to a directory location that doesn't exist or without the appropriate permissions and the write happened.");
 	    } catch (IOException e) {
 
@@ -314,9 +315,9 @@ public class StudentRecordIOTest {
 	    	// If the test is run on Jenkins, a "Permission denied" IOException should be thrown.
 	    	if (System.getProperty("user.name").equals("jenkins")) {
 	    		assertEquals("/home/sesmith5/actual_student_records.txt (Permission denied)", e.getMessage());
-	    	} else { 
+	    	} else {
 	    		if (System.getProperties().getProperty("os.name").matches("Windows.*")) {
-	    			assertEquals("/home/sesmith5/actual_student_records.txt (The system cannot find the path specified)", e.getMessage());
+	    			assertEquals("\\home\\sesmith5\\actual_student_records.txt (The system cannot find the path specified)", e.getMessage());
 	    		} else if (System.getProperty("os.name").matches("Linux.*")) {
 	    			assertEquals("/home/sesmith5/actual_student_records.txt (No such file or directory)", e.getMessage());
 	    		}

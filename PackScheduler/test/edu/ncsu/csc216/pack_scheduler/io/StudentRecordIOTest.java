@@ -249,7 +249,7 @@ public class StudentRecordIOTest {
 		
 		// Tests passing a filename the Student shouldn't have access to.
 		try {
-			StudentRecordIO.writeStudentRecords("/test_file.txt", studentDirectory);
+			StudentRecordIO.writeStudentRecords(File.separator + "test_file.txt", studentDirectory);
 			fail();
 		} catch (IOException e) {
 			// Do nothing
@@ -304,9 +304,9 @@ public class StudentRecordIOTest {
 	    SortedList<Student> students = new SortedList<Student>();
 	    students.add(new Student("Zahir", "King", "zking", "orci.Donec@ametmassaQuisque.com", hashPW, 15));
 	    //Assumption that you are using a hash of "pw" stored in hashPW
-	    
+
 	    try {
-	        StudentRecordIO.writeStudentRecords("/home/sesmith5/actual_student_records.txt", students);
+	        StudentRecordIO.writeStudentRecords("/home/sesmith5/actual_student_records.txt".replaceAll("/",  File.separator), students);
 	        fail("Attempted to write to a directory location that doesn't exist or without the appropriate permissions and the write happened.");
 	    } catch (IOException e) {
 
@@ -319,6 +319,6 @@ public class StudentRecordIOTest {
 	    		//   a "No such file" exception should be thrown.
 	    		assertEquals("/home/sesmith5/actual_student_records.txt (No such file or directory)", e.getMessage());
 	    	}
-	    }
+	    } 
 	}
 }

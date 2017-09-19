@@ -315,9 +315,13 @@ public class StudentRecordIOTest {
 	    	if (System.getProperty("user.name").equals("jenkins")) {
 	    		assertEquals("/home/sesmith5/actual_student_records.txt (Permission denied)", e.getMessage());
 	    	} else { 
+	    		if (System.getProperties().getProperty("os.name").matches("Windows.*")) {
+	    			assertEquals("/home/sesmith5/actual_student_records.txt (The system cannot find the path specified)", e.getMessage());
+	    		} else if (System.getProperty("os.name").matches("Linux.*")) {
+	    			assertEquals("/home/sesmith5/actual_student_records.txt (No such file or directory)", e.getMessage());
+	    		}
 	    		// If the test is run locally, i.e. by any user other than Jenkins, 
 	    		//   a "No such file" exception should be thrown.
-	    		assertEquals("/home/sesmith5/actual_student_records.txt (No such file or directory)", e.getMessage());
 	    	}
 	    } 
 	}

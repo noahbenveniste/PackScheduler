@@ -91,6 +91,8 @@ public class StudentRecordIO {
 			fileWriter = new PrintStream(new File(filename));
 		} catch(NullPointerException e) {
 			throw new IOException();
+		} catch(IOException f) {
+			throw new IOException(filename + " (No such file or directory)");
 		}
 
 		for (int i = 0; i < studentDirectory.size(); i++) {

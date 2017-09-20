@@ -24,6 +24,9 @@ public class CourseCatalog {
 	/**
 	 * Constructs a blank CourseCatalog
 	 */
+	public CourseCatalog() {
+		newCourseCatalog();
+	}
 	
 	
 	/**

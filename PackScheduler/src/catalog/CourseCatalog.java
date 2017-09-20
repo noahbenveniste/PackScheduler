@@ -4,11 +4,12 @@
 package catalog;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import edu.ncsu.csc216.collections.list.SortedList;
 import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.io.CourseRecordIO;
-import edu.ncsu.csc216.pack_scheduler.course.ConflictException;
+
 
 /**
  * @author Kevin Hildner
@@ -41,6 +42,39 @@ public class CourseCatalog {
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Unable to read file " + fileName);
 		}
+	}
+	
+	/**
+	 * Adds a course to the catalog. Allows any IllegalArgumentExceptions that are thrown from
+	 * constructing a course to be thrown to the user. Returns true if the course is valid and 
+	 * can be added to the catalog, returns false if the course already exists in the catalog
+	 * @param name Name of the Course
+	 * @param title Title of the Course
+	 * @param section Section number of the Course
+	 * @param credits Number of credit hours for the Course
+	 * @param instructorId Course instructor's unity id
+	 * @param meetingDays First letter of all days the Course meets
+	 * @param startTime the time the course starts
+	 * @param endTime the time the course ends
+	 * @return true if the course is valid and can be added to the catalog, returns false if the 
+	 * course already exists in the catalog
+	 */
+	public boolean addCourseToCatalog(String name, String title, String section, int credits, String instructorID,
+			String meetingDays, int startTime, int endTime) {
+		// Create the course
+		Course c = new Course(name, title, section, credits, instructorID, meetingDays, startTime, endTime);
+
+		// Check for duplicate
+		for (int i = 0; i < catalog.size(); i++) {
+			if (catalog.get(i).isDuplicate(c)) {
+				return false;
+			}
+		}
+
+		// Add the class to their schedule
+		catalog.add(c);
+		return true;
+
 	}
 	
 	/**
@@ -87,5 +121,18 @@ public class CourseCatalog {
 			courseCatalog[i][2] = c.getTitle();
 		}
 		return courseCatalog;
+	}
+	
+	/**
+	 * Saves the current course catalog
+	 * @param fileName The desired name of the file being saved to
+	 * @throws IllegalArgumentException if the file is unable to be written
+	 */
+	public void saveCourseCatalog(String fileName) {
+		try {
+			CourseRecordIO.writeCourseRecords(fileName, catalog);
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Unable to write to file " + fileName);
+		}
 	}
 }

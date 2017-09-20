@@ -1,7 +1,7 @@
 /**
  * 
  */
-package catalog;
+package edu.ncsu.csc216.pack_scheduler.catalog;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

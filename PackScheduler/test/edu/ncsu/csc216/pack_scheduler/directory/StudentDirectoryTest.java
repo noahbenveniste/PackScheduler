@@ -4,12 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Scanner;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -37,23 +33,19 @@ public class StudentDirectoryTest {
 	/** Non matching password */
 	private static final String PASSWORD1 = "pw1";
 	
-	/**
-	 * Resets course_records.txt for use in other tests.
-	 * @throws Exception if something fails during setup.
-	 */
-	@Before
-	public void setUp() throws Exception {		
-		//Reset student_records.txt so that it's fine for other needed tests
-		Path sourcePath = FileSystems.getDefault().getPath("test-files", "expected_full_student_records.txt");
-		Path destinationPath = FileSystems.getDefault().getPath("test-files", "student_records.txt");
-		try {
-			Files.deleteIfExists(destinationPath);
-			Files.copy(sourcePath, destinationPath);
-		} catch (IOException e) {
-			fail("Unable to reset files");
-		}
-	}
-	
+    /*  Removed the provided setUp() method, because it overwrote an
+     *    input file "student_records.txt" (unsorted records) with the contents of
+     *    "expected_full_student_records.txt" (sorted records). Since Lab 3 is testing
+     *    the implementation of SortedList as the underlying data structure of
+     *    StudentDirectory, it makes more sense to take an unsorted "student_records.txt"
+     *    as input, produce a sorted "actual_student_records.txt" and compare
+     *    that to "expected_full_student_records.txt". Otherwise, the
+     *    StudentDirectoryTest tests might pass even if StudentDirectory hadn't
+     *    been replaced its ArrayList with a SortedList. Also, it seems like good practice
+     *    to not overwrite input files, since they are committed to GitHub. If we were to
+     *    use a sorted file, we should just change the file and push it, rather than
+     *    overwrite it before every test.
+     */
 	
 	/**
 	 * Tests StudentDirectory().

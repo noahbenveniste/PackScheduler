@@ -11,6 +11,7 @@ import org.junit.Test;
  * will be tested through other methods.
  * 
  * @author Sarah Heckman
+ * @author Noah Benveniste
  */
 public class CourseTest {
 	
@@ -624,6 +625,21 @@ public class CourseTest {
 		assertEquals("TH 11:45AM-2:25PM", c4.getMeetingString());
 	}
 
+	/**
+	 * Tests the compareTo method
+	 */
+	@Test
+	public void testCompareTo() {
+		Course c1 = new Course(NAME, TITLE, SECTION, CREDITS, INSTRUCTOR_ID, MEETING_DAYS, START_TIME, END_TIME);
+		Course c2 = new Course("ABC123", TITLE, SECTION, CREDITS, INSTRUCTOR_ID, MEETING_DAYS, START_TIME, END_TIME);
+		Course c3 = new Course(NAME, TITLE, "002", CREDITS, INSTRUCTOR_ID, MEETING_DAYS, START_TIME, END_TIME);
+		
+		assertTrue(c1.compareTo(c2) > 0);
+		assertTrue(c2.compareTo(c1) < 0);
+		assertTrue(c1.compareTo(c3) < 0);
+		
+	}
+	
 	/**
 	 * Tests that the equals method works for all Course fields.
 	 */

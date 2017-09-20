@@ -5,7 +5,7 @@ package edu.ncsu.csc216.pack_scheduler.course;
  * @author Noah Benveniste
  * @author Sarah Heckman
  */
-public class Course extends Activity {
+public class Course extends Activity implements Comparable<Course> {
     
 	/** Fields */
 	
@@ -229,6 +229,25 @@ public class Course extends Activity {
 				"" + this.getCredits(), this.getInstructorId(), this.getMeetingString(), ""};
 	}
 	
+	/**
+	 * Used to compare two Course objects. Done by comparing course name and then section 
+	 * lexicographically i.e. checks if a string field would come
+	 * before or after another string field in a dictionary.
+	 * @param o The Course to compare to
+	 * @return a negative int if this is lexicographically greater than o, a positive
+	 * int if this is lexicographically less than o, and 0 if this and o are equivalent
+	 */
+	@Override
+	public int compareTo(Course o) {
+		if (!this.getName().equals(o.getName())) {
+			return (this.getName().compareTo(o.getName()));
+		} else if (!this.getSection().equals(o.getSection())) {
+			return (this.getSection().compareTo(o.getSection()));
+		}
+		//If all fields are equal, return 0
+		return 0;
+	}
+	
 	
 	/** Overridden hashCode(), equals() and toString() */
 	
@@ -293,5 +312,4 @@ public class Course extends Activity {
 	    }
 	    return name + "," + this.getTitle() + "," + section + "," + credits + "," + instructorId + "," + this.getMeetingDays() + "," + this.getStartTime() + "," + this.getEndTime(); 
 	}
-	
 }

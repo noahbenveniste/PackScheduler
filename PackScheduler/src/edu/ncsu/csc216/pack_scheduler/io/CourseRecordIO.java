@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import edu.ncsu.csc216.collections.list.SortedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -15,22 +15,24 @@ import edu.ncsu.csc216.pack_scheduler.course.Course;
  * Reads Course records from text files.  Writes a set of CourseRecords to a file.
  * @author Noah Benveniste
  * @author Sarah Heckman
+ * @author Daniel Mills 
  */
 public class CourseRecordIO {
 
     /**
      * Reads course records from a file and generates a list of valid Courses.  Any invalid
-     * Courses are ignored.  If the file to read cannot be found or the permissions are incorrect
-     * a File NotFoundException is thrown.
+     *   Courses are ignored.  If the file to read cannot be found or the permissions are incorrect
+     *   a File NotFoundException is thrown. The Courses are returned as a SortedList, with the sorting
+     *   of the Course's defined by Course.compareTo.
      * @param fileName file to read Course records from
-     * @return a list of valid Courses
+     * @return a list of valid Courses, sorted in lexicographic order
      * @throws FileNotFoundException if the file cannot be found or read
      */
-	public static ArrayList<Course> readCourseRecords(String fileName) throws FileNotFoundException {
+	public static SortedList<Course> readCourseRecords(String fileName) throws FileNotFoundException {
 	    Scanner fileReader = new Scanner(new FileInputStream(fileName));
 	    
 	    //Generate the array list to contain the course objects
-	    ArrayList<Course> courses = new ArrayList<Course>();
+	    SortedList<Course> courses = new SortedList<Course>();
 	    
 	    //Continue reading through the file while there are lines to read
 	    while (fileReader.hasNextLine()) {
@@ -143,7 +145,7 @@ public class CourseRecordIO {
      * @param courses an array list of courses to be written to the file
      * @throws IOException if the file cannot be saved
      */
-    public static void writeCourseRecords(String fileName, ArrayList<Course> courses) throws IOException {
+    public static void writeCourseRecords(String fileName, SortedList<Course> courses) throws IOException {
     	//Initialize print stream object to write to file
     	PrintStream fileWriter = new PrintStream(new File(fileName));
 
@@ -155,5 +157,4 @@ public class CourseRecordIO {
     	//Once all courses have been printed into the file, close the print stream
     	fileWriter.close();
     }
-
 }

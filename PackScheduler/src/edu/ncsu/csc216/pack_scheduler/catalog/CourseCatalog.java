@@ -81,7 +81,11 @@ public class CourseCatalog {
 	}
 	
 	/**
-	 * 
+	 * Removes a course from the catalog, specified by name and section number.
+	 * @param name the name of the course
+	 * @param section the section number of the course
+	 * @return true if the course was able to be removed (i.e. it existed in the catalog),
+	 * or false if the course did not exist in the catalog and couldn't be removed.
 	 */
 	public boolean removeCourseFromCatalog(String name, String section) {
 		for (int i = 0; i < catalog.size(); i++) {
@@ -96,7 +100,11 @@ public class CourseCatalog {
 	}
 	
 	/**
-	 * 
+	 * Gets a course from the catalog, specified by name and section number.
+	 * @param name the name of the course
+	 * @param section the section number of the course
+	 * @return the course specified by name and section or null if the specified course
+	 * does not exist.
 	 */
 	public Course getCourseFromCatalog(String name, String section) {
 		for (int i = 0; i < catalog.size(); i++) {
@@ -110,7 +118,9 @@ public class CourseCatalog {
 	}
 	
 	/**
-	 *
+	 * Gets a string array representation of the courseCatalog with course name, section
+	 * and title in each column respectively and a course in each row.
+	 * @return courseCatalog as a 2D string array
 	 */
 	public String[][] getCourseCatalog() {
 		//Initialize the string array

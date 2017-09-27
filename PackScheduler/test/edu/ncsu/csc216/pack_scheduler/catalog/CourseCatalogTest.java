@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.ncsu.csc216.pack_scheduler.course.Course;
+
 /**
  * @author Noah Benveniste
  * @author Daniel Mills
@@ -21,20 +23,8 @@ public class CourseCatalogTest {
 	private final String invalidTestFile = "test-files/invalid_course_records.txt";
 	/** Course name */
 	private static final String NAME = "CSC216";
-	/** Course title */
-	private static final String TITLE = "Programming Concepts - Java";
 	/** Course section */
 	private static final String SECTION = "001";
-	/** Course credits */
-	private static final int CREDITS = 4;
-	/** Course instructor id */
-	private static final String INSTRUCTOR_ID = "sesmith5";
-	/** Course meeting days */
-	private static final String MEETING_DAYS = "MW";
-	/** Course start time */
-	private static final int START_TIME = 1330;
-	/** Course end time */
-	private static final int END_TIME = 1445;
 	
 	/**
 	 * Tests the construction of a course catalog 
@@ -88,41 +78,122 @@ public class CourseCatalogTest {
 	
 	/**
 	 * Tests adding a course to a catalog
+	 * @kwhildne
 	 */
 	@Test
 	public void testAddCourseToCatalog() {
-		
+		// Add a blank courseCatalog
+		CourseCatalog catalog = new CourseCatalog();
+
+		// Test adding a valid course to the catalog
+		assertTrue(catalog.addCourseToCatalog("CSC116", "Intro to Programming - Java", "001", 3, "jdyoung2", "MW", 910,
+				1100));
+		assertEquals(1, catalog.getCourseCatalog().length);
+
+		// Test adding a duplicate course to the catalog
+		assertFalse(catalog.addCourseToCatalog("CSC116", "Intro to Programming - Java", "001", 3, "jdyoung2", "MW", 910,
+				1100));
+		assertEquals(1, catalog.getCourseCatalog().length);
 	}
-	
+
 	/**
 	 * Tests removing a course from a catalog
+	 * @author kwhildne
 	 */
 	@Test
 	public void testRemoveCourseFromCatalog() {
-		
+		// Load in a course catalog from a valid test file
+		CourseCatalog catalog = new CourseCatalog();
+		catalog.loadCoursesFromFile(validTestFile);
+
+		// Test removing a course that exists in the file
+		assertTrue(catalog.removeCourseFromCatalog("CSC116", "001"));
+		assertEquals(7, catalog.getCourseCatalog().length);
+
+		// Test removing a course that does not exist in the file
+		assertFalse(catalog.removeCourseFromCatalog("CSC116", "001"));
+		assertEquals(7, catalog.getCourseCatalog().length);
+
 	}
-	
+
 	/**
 	 * Tests getting a course from a catalog
+	 * @author kwhildne
 	 */
 	@Test
 	public void testGetCourseFromCatalog() {
+		// Load in a course catalog from a valid test file
+		CourseCatalog catalog = new CourseCatalog();
+		catalog.loadCoursesFromFile(validTestFile);
 		
+		// Test getting a course from the catalog
+		Course c = catalog.getCourseFromCatalog("CSC116", "001");
+		Course t = new Course("CSC116", "Intro to Programming - Java", "001", 3, "jdyoung2", "MW", 910,
+		1100);
+		assertTrue(c.equals(t));
+		
+		// Test tring to get a course that doesn't exist in the catalog
+		Course d = catalog.getCourseFromCatalog("CSC900", "001");
+		assertNull(d);
 	}
-	
+
 	/**
-	 * Tests getting a course catalog
+	 * Tests returning part of a CourseCatalog's contents as a String array
+	 *   of the Courses with each row in the form {name,section,title,meetingString}.
+	 * @author demills
 	 */
 	@Test
 	public void testGetCourseCatalog() {
-		
+		CourseCatalog catalog = new CourseCatalog();
+
+		// Tests empty catalog.
+		assertEquals(0, catalog.getCourseCatalog().length);
+
+		// Tests a catalog with several course records.
+		catalog.loadCoursesFromFile(validTestFile);
+
+		String[][] actual = catalog.getCourseCatalog();
+		assertEquals(8, catalog.getCourseCatalog().length);
+		assertEquals("CSC116", actual[0][0]);
+		assertEquals("001", actual[0][1]);
+		assertEquals("Intro to Programming - Java", actual[0][2]);
+		assertEquals("MW 9:10AM-11:00AM", actual[0][3]);
+
+		assertEquals("CSC216", actual[3][0]);
+		assertEquals("601", actual[5][1]);
+		assertEquals("Programming Concepts - Java", actual[5][2]);
+		assertEquals("Arranged", actual[5][3]);
+
+		assertEquals("CSC226", actual[6][0]);
+		assertEquals("001", actual[6][1]);
+		assertEquals("Discrete Mathematics for Computer Scientists", actual[6][2]);
+		assertEquals("MWF 9:35AM-10:25AM", actual[6][3]);
+
+		assertEquals("CSC230", actual[7][0]);
+		assertEquals("001", actual[7][1]);
+		assertEquals("C and Software Tools", actual[7][2]);
+		assertEquals("MW 11:45AM-1:00PM", actual[7][3]);
 	}
 	
 	/**
-	 * Tests saving a course catalog
+	 * Tests saving a course catalog to file. 
+	 * @author demills
 	 */
 	@Test
 	public void testSaveCourseCatalog() {
-		
+		// Tests that an IllegalArgumentException is thrown when passed a null filename.
+		// IllegalArguments can be thrown by other bad inputs, but the CourseRecordIO 
+		//   class is already tested on those paths. We only need to follow at least 
+		//   one of these paths to ensure CourseCatalog catches IOExceptions from
+		//   CourseRecordIO appropriately.
+		CourseCatalog actual = new CourseCatalog();
+		actual.loadCoursesFromFile(validTestFile);
+		try {
+			actual.saveCourseCatalog("");
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertEquals("Unable to write to file ", e.getMessage());
+		}
+		actual.loadCoursesFromFile(validTestFile);
 	}
 }

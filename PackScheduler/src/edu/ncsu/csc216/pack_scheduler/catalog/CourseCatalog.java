@@ -119,12 +119,12 @@ public class CourseCatalog {
 	
 	/**
 	 * Gets a string array representation of the courseCatalog with course name, section
-	 * and title in each column respectively and a course in each row.
+	 * title, and meeting string in each column respectively and a course in each row.
 	 * @return courseCatalog as a 2D string array
 	 */
 	public String[][] getCourseCatalog() {
 		//Initialize the string array
-		String[][] courseCatalog = new String[catalog.size()][3];
+		String[][] courseCatalog = new String[catalog.size()][4];
 		//Loop through the course catalog getting the required fields and adding them
 		//to the relevant cells in the string array
 		for (int i = 0; i < catalog.size(); i++) {
@@ -132,6 +132,7 @@ public class CourseCatalog {
 			courseCatalog[i][0] = c.getName();
 			courseCatalog[i][1] = c.getSection();
 			courseCatalog[i][2] = c.getTitle();
+			courseCatalog[i][3] = c.getMeetingString();
 		}
 		return courseCatalog;
 	}
@@ -139,13 +140,13 @@ public class CourseCatalog {
 	/**
 	 * Saves the current course catalog
 	 * @param fileName The desired name of the file being saved to
-	 * @throws IllegalArgumentException if the file is unable to be written
+	 * @throws IllegalArgumentException if the file is unable to be written to
 	 */
 	public void saveCourseCatalog(String fileName) {
 		try {
 			CourseRecordIO.writeCourseRecords(fileName, catalog);
 		} catch (IOException e) {
-			throw new IllegalArgumentException("Unable to write to file " + fileName);
+			throw new IllegalArgumentException("Unable to write to file ");
 		}
 	}
 }

@@ -95,6 +95,15 @@ public class CourseCatalogTest {
 		assertFalse(catalog.addCourseToCatalog("CSC116", "Intro to Programming - Java", "001", 3, "jdyoung2", "MW", 910,
 				1100));
 		assertEquals(1, catalog.getCourseCatalog().length);
+		
+		// Test adding non-duplicate course with same name, but different section.
+		assertTrue(catalog.addCourseToCatalog("CSC116", "Intro to Programming - Java", "002", 3, "jdyoung2", "MW", 910,
+				1100));
+		assertEquals(2, catalog.getCourseCatalog().length);
+		// Test adding non-duplicate course with same section, but different name.
+		assertTrue(catalog.addCourseToCatalog("MA305", "Linear Algebra", "001", 3, "jdyoung2", "MW", 910,
+				1100));
+		assertEquals(3, catalog.getCourseCatalog().length);
 	}
 
 	/**

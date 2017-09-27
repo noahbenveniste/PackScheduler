@@ -12,6 +12,8 @@ import edu.ncsu.csc216.pack_scheduler.io.CourseRecordIO;
 
 
 /**
+ * A CourseCatalog represents a collection of the Courses available for a
+ *   Student to register in, or for a Faculty to teach. 
  * @author Kevin Hildner
  * @author Noah Benveniste
  *
@@ -37,7 +39,9 @@ public class CourseCatalog {
 	}
 	
 	/**
-	 * 
+	 * Provided a file of Course records in valid format, reads in the 
+	 *   Courses as a SortedList.
+	 * @param fileName path to a file containing Course records
 	 */
 	public void loadCoursesFromFile(String fileName) {
 		try {
@@ -55,7 +59,7 @@ public class CourseCatalog {
 	 * @param title Title of the Course
 	 * @param section Section number of the Course
 	 * @param credits Number of credit hours for the Course
-	 * @param instructorId Course instructor's unity id
+	 * @param instructorID Course instructor's unity id
 	 * @param meetingDays First letter of all days the Course meets
 	 * @param startTime the time the course starts
 	 * @param endTime the time the course ends

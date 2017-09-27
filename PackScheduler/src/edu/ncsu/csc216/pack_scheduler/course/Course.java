@@ -240,9 +240,9 @@ public class Course extends Activity implements Comparable<Course> {
 	@Override
 	public int compareTo(Course o) {
 		if (!this.getName().equals(o.getName())) {
-			return (this.getName().compareTo(o.getName()));
+			return this.getName().compareTo(o.getName());
 		} else if (!this.getSection().equals(o.getSection())) {
-			return (this.getSection().compareTo(o.getSection()));
+			return this.getSection().compareTo(o.getSection());
 		}
 		//If all fields are equal, return 0
 		return 0;

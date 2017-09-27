@@ -202,7 +202,7 @@ public class Course extends Activity implements Comparable<Course> {
 			//Cast the input to a Course
 			Course course = (Course)activity;
 			//Check that the courses being compared do not have the same name
-			return this.getName().equals(course.getName());
+			return this.getName().equals(course.getName()) && this.getSection().equals(course.getSection());
 		} else {
 			//Return false if the Activity is not a Course
 			return false;
